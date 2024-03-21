@@ -2,7 +2,7 @@
  * @Author: yao.xie 1595341200@qq.com
  * @Date: 2024-03-11 17:25:32
  * @LastEditors: yao.xie 1595341200@qq.com
- * @LastEditTime: 2024-03-21 10:22:13
+ * @LastEditTime: 2024-03-21 23:09:09
  * @FilePath: /cplusplus/submodule/algorithmBase/src/kalmanFiltering.cpp
  * @Description: 
  * 
@@ -12,7 +12,7 @@
 
 #include <iostream>
 
-#include <Eigen/Dense>
+#include <eigen3/Eigen/Dense>
 
 KalmanFilter::KalmanFilter() {  // 动力学模型转移矩阵
   //    A << 1, 0, dt, 0,
@@ -37,15 +37,15 @@ KalmanFilter::KalmanFilter() {  // 动力学模型转移矩阵
        0,
        0;
 
-  Q << 0.1, 0, 0, 0,
-       0, 0.1, 0, 0,
-       0, 0, 0.1, 0,
-       0, 0, 0, 0.1;
+  Q << 0.01, 0, 0, 0,
+       0, 0.01, 0, 0,
+       0, 0, 0.01, 0,
+       0, 0, 0, 0.01;
 
-  R << 0.2, 0, 0, 0,
-       0, 0.2, 0, 0,
-       0, 0, 0.2, 0,
-       0, 0, 0, 0.2;
+  R << 0.01, 0, 0, 0,
+       0, 0.01, 0, 0,
+       0, 0, 0.01, 0,
+       0, 0, 0, 0.01;
 
   P << 1, 0, 0, 0,
        0, 1, 0, 0,
