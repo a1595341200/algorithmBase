@@ -2,7 +2,7 @@
  * @Author: yao.xie 1595341200@qq.com
  * @Date: 2024-03-11 17:25:32
  * @LastEditors: yao.xie 1595341200@qq.com
- * @LastEditTime: 2024-03-21 09:42:18
+ * @LastEditTime: 2024-03-21 10:22:13
  * @FilePath: /cplusplus/submodule/algorithmBase/src/kalmanFiltering.cpp
  * @Description: 
  * 
@@ -71,14 +71,14 @@ void KalmanFilter::update(Eigen::VectorXf measurement) {
   // 更新步骤
   // 测量残差协方差
   auto S = (H * P_hat * H.transpose() + R).inverse();
-  std::cout << "S = " << S << std::endl;
+//   std::cout << "S = \n" << S << std::endl;
   K = P_hat * H.transpose() * S;
-  std::cout << "K = " << K << std::endl;
+  std::cout << "K = \n" << K << std::endl;
   // 测量残差
   auto z = measurement - H * x_hat;
   x = x_hat + K * z;
   P = (Eigen::MatrixXf::Identity(A.rows(), A.cols()) - K * H) * P_hat;
-  std::cout << "P " << P << std::endl;
+  std::cout << "P \n" << P << std::endl;
 }
 
 Eigen::VectorXf KalmanFilter::getState() const {
