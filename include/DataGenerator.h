@@ -2,7 +2,7 @@
  * @Author: yao.xie 1595341200@qq.com
  * @Date: 2024-03-20 21:53:49
  * @LastEditors: yao.xie 1595341200@qq.com
- * @LastEditTime: 2024-03-25 16:52:11
+ * @LastEditTime: 2024-03-25 10:04:55
  * @FilePath: /cplusplus/submodule/algorithmBase/include/DataGenerator.h
  * @Description:
  *
@@ -15,7 +15,7 @@
 #include <random>
 #include <vector>
 
-#include <Eigen/Dense>
+#include <eigen3/Eigen/Dense>
 
 namespace algorithmBase {
 template <typename T = double>
