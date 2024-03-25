@@ -2,18 +2,20 @@
  * @Author: yao.xie 1595341200@qq.com
  * @Date: 2024-03-20 21:53:49
  * @LastEditors: yao.xie 1595341200@qq.com
- * @LastEditTime: 2024-03-21 10:36:17
+ * @LastEditTime: 2024-03-25 16:52:11
  * @FilePath: /cplusplus/submodule/algorithmBase/include/DataGenerator.h
  * @Description:
  *
  * Copyright (c) 2024 by ${git_name_email}, All Rights Reserved.
  */
 #pragma once
+#include <algorithm>
 #include <cmath>
 #include <iomanip>
 #include <random>
 #include <vector>
-#include <algorithm>
+
+#include <Eigen/Dense>
 
 namespace algorithmBase {
 template <typename T = double>
@@ -35,4 +37,20 @@ std::vector<T> generateNormalDistributionData(double mean, double stdDev, size_t
     });
     return result;
 }
+
+template <typename T = double>
+std::pair<std::vector<T>, std::vector<T>> generatingGaussianEquation(double mean, double stdDev) {
+    std::pair<std::vector<T>, std::vector<T>> res;
+    static auto gaussian = [](double mean, double stdDev, double x) {
+        return std::exp(-0.5 * std::pow((x - mean) / stdDev, 2)) / (std::sqrt(2 * M_PI) * stdDev);
+    };
+    for (double x = mean - 5.0; x <= mean + 5.0; x += 0.1) {
+        double y = gaussian(mean, stdDev, x);
+        res.first.push_back(x);
+        res.second.push_back(y);
+    }
+
+    return res;
+}
+
 }  // namespace algorithmBase
