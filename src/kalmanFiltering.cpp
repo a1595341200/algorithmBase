@@ -2,7 +2,7 @@
  * @Author: yao.xie 1595341200@qq.com
  * @Date: 2024-03-11 17:25:32
  * @LastEditors: yao.xie 1595341200@qq.com
- * @LastEditTime: 2024-03-21 23:09:09
+ * @LastEditTime: 2024-03-22 00:12:34
  * @FilePath: /cplusplus/submodule/algorithmBase/src/kalmanFiltering.cpp
  * @Description: 
  * 
@@ -29,8 +29,8 @@ KalmanFilter::KalmanFilter() {  // 动力学模型转移矩阵
   //clang-format off
   A << 1, 0, 0, 0,
        0, 1, 0, 0,
-       0, 0, 1, 0,
-       0, 0, 0, 1;
+       0, 0, 0, 0,
+       0, 0, 0, 0;
 
   x << 0,
        0,
