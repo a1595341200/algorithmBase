@@ -1,7 +1,20 @@
 #include "pdaf.h"
+
+#include "Log.h"
 namespace algorithmBase {
-void pdaf::prediction() {
-    statePrediction();
+
+pdaf::pdaf() {
+    X << 1, 1;
+    A = Eigen::Matrix2f::Identity();
+    Q << 0.1, 0, 0, 0.1;
+    R << 0.1, 0, 0, 0.1;
+    K = Eigen::Matrix2f::Zero();
+    P << 0.01, 0, 0, 0.01;
+    H = Eigen::Matrix2f::Identity();
+}
+
+void pdaf::prediction(float dt) {
+    statePrediction(dt);
     errorCovPrediction();
     measurementPrediction();
 }
@@ -11,6 +24,11 @@ float pdaf::validationGateVolume() {
 }
 
 void pdaf::update(const std::vector<Eigen::Vector2f>& mess) {
+    if (mess.empty()) {
+        return;
+    }
+    Bi.clear();
+    Bi.resize(mess.size());
     innovationPrediction(mess);
     innovationErrorCovPrediction();
     kalmanGain();
@@ -19,11 +37,13 @@ void pdaf::update(const std::vector<Eigen::Vector2f>& mess) {
     errorCovUpdate(mess);
 }
 
-void pdaf::statePrediction() {
+void pdaf::statePrediction(float dt) {
     X = A * X;
+    // log(std::cout, "X \n", X);
 }
 void pdaf::errorCovPrediction() {
     P = A * P * A.transpose() + Q;
+    // log(std::cout, "P \n", P);
 }
 
 void pdaf::measurementPrediction() {
@@ -32,8 +52,9 @@ void pdaf::measurementPrediction() {
 
 void pdaf::innovationPrediction(const std::vector<Eigen::Vector2f>& mess) {
     V.clear();
-    for (auto& m : mess) {
-        V.emplace_back(m - Z);
+    V.resize(mess.size() + 1);
+    for (size_t i = 0; i < mess.size(); i++) {
+        V[i + 1] = (mess[i] - Z);
     }
 }
 
@@ -43,17 +64,17 @@ void pdaf::innovationErrorCovPrediction() {
 
 void pdaf::kalmanGain() {
     K = P * H.transpose() * S.inverse();
+    // log(std::cout, "K \n", K);
 }
 void pdaf::equivalentInnovation(const std::vector<Eigen::Vector2f>& mess) {
-    Eigen::Vector2f sum(mess.back().rows(), mess.back().cols());
-
+    Eigen::Vector2f sum(0.0f, 0.0f);
+    Bi[0] = calculateBi(mess, 0);
     for (size_t i = 0; i < mess.size(); i++) {
-        if (Bi[i] == 0.0) {
-            Bi[i] = calculateBi(mess, i);
-        }
-        sum += Bi[i] * V[i];
+        Bi[i + 1] = calculateBi(mess, i + 1);
+        sum += Bi[i + 1] * V[i + 1];
     }
     EV = sum;
+    // log(std::cout, "EV \n", EV);
 }
 
 double pdaf::calculateBi(const std::vector<Eigen::Vector2f>& mess, size_t index) {
@@ -113,9 +134,9 @@ double pdaf::sumLi(const std::vector<Eigen::Vector2f>& mess) {
     double sumLi{};
 
     for (size_t i = 0; i < mess.size(); i++) {
-        sumLi += calculateLi(mess, i);
+        sumLi += calculateLi(mess, i + 1);
     }
-    return (sumLi);
+    return sumLi;
 }
 void pdaf::stateUpdate() {
     X = X + K * EV;
@@ -123,20 +144,13 @@ void pdaf::stateUpdate() {
 
 void pdaf::errorCovUpdate(const std::vector<Eigen::Vector2f>& mess) {
     float B0;
-    Eigen::Matrix2f Pc;  // cov matrix of the stated update with the correct measurement
-    Eigen::Matrix2f Ps;  // spread of innovations
-    Eigen::Matrix2f sum;
-
-    Eigen::Matrix2f Pk;  // return value
-
+    Eigen::Matrix2f sum = Eigen::Matrix2f::Zero();
     B0 = calculateBi(mess, 0);
     Pc = P - K * S * K.transpose();
 
     for (size_t i = 0; i < mess.size(); i++) {
-        if (Bi[i] == 0.0) {
-            Bi[i] = calculateBi(mess, i);
-        }
-        sum += Bi[i] * V[i] * V[i].transpose();
+        Bi[i + 1] = calculateBi(mess, i + 1);
+        sum += Bi[i + 1] * V[i + 1] * V[i + 1].transpose();
     }
     Ps = K * (sum - EV * EV.transpose()) * K.transpose();
 

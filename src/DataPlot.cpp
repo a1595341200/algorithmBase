@@ -1,3 +1,13 @@
+/*
+ * @Author: yao.xie 1595341200@qq.com
+ * @Date: 2024-03-22 15:58:59
+ * @LastEditors: yao.xie 1595341200@qq.com
+ * @LastEditTime: 2024-03-25 15:15:36
+ * @FilePath: /cplusplus/submodule/algorithmBase/src/DataPlot.cpp
+ * @Description:
+ *
+ * Copyright (c) 2024 by ${git_name_email}, All Rights Reserved.
+ */
 #include "DataPlot.h"
 
 #include "Helpers.h"
@@ -32,7 +42,7 @@ void DataPlot::addPlot(const std::string& plotName, const std::string& subPlotNa
     if (it == mPlotNames.end()) {
         mPlotNames.push_back(plotName);
     }
-    mCheckBoxes[plotName] = true;
+    mCheckBoxes[plotName] = false;
     mColors[plotName] = RandomColor();
 }
 void DataPlot::addData(const std::string& plotName, float x, float y) {

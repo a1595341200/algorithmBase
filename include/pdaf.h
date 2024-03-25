@@ -2,7 +2,7 @@
  * @Author: yao.xie 1595341200@qq.com
  * @Date: 2024-03-23 21:35:41
  * @LastEditors: yao.xie 1595341200@qq.com
- * @LastEditTime: 2024-03-24 00:16:46
+ * @LastEditTime: 2024-03-25 11:08:37
  * @FilePath: /cplusplus/submodule/algorithmBase/include/pdaf.h
  * @Description:
  *
@@ -10,18 +10,20 @@
  */
 #pragma once
 #include <vector>
-
+#include <fmt/core.h>
+#include <fmt/ranges.h>
 #include <eigen3/Eigen/Dense>
 
 namespace algorithmBase {
 class pdaf {
 public:
-    void prediction();
+    pdaf();
+    void prediction(float dt);
     void update(const std::vector<Eigen::Vector2f>& mess);
 
-private:
+public:
     // 1 预测状态
-    void statePrediction();
+    void statePrediction(float dt);
     // 2 预测协方差矩阵
     void errorCovPrediction();
     // 3 预测的观测值
@@ -58,6 +60,8 @@ private:
     // 表示在已知所有的有效观测值后，当前K时刻第i个观测值与第i个观测值来自这个目标的概率。将
     // 这个概率当做权重,求新息向量的加权和作为等效新息向量
     std::vector<float> Bi;
+    Eigen::Matrix2f Pc;  // cov matrix of the stated update with the correct measurement
+    Eigen::Matrix2f Ps;  // spread of innovations
     float Pd{0.35};  // 目标的检测概率, 有传感器性能决定, 是一个已知值
     float Pg{0.9999};  // 目标的检测概率, 有传感器性能决定, 是一个已知值
 };
