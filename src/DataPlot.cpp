@@ -2,7 +2,7 @@
  * @Author: yao.xie 1595341200@qq.com
  * @Date: 2024-03-22 15:58:59
  * @LastEditors: yao.xie 1595341200@qq.com
- * @LastEditTime: 2024-03-25 15:15:36
+ * @LastEditTime: 2024-03-28 15:27:12
  * @FilePath: /cplusplus/submodule/algorithmBase/src/DataPlot.cpp
  * @Description:
  *
@@ -50,6 +50,16 @@ void DataPlot::addData(const std::string& plotName, float x, float y) {
 }
 void DataPlot::addData(const std::string& plotName, const std::string& subPlotName, float x,
                        float y) {
+    auto it = std::find(mPlotNames.begin(), mPlotNames.end(), plotName);
+    if (it == mPlotNames.end()) {
+        mPlotNames.push_back(plotName);
+    }
+    if (mCheckBoxes.count(plotName) == 0) {
+        mCheckBoxes[plotName] = false;
+    }
+    if (mColors.count(plotName) == 0) {
+        mColors[plotName] = RandomColor();
+    }
     mData[plotName][subPlotName].push_back(ImVec2(x, y));
 }
 }  // namespace algorithmBase
