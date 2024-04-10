@@ -69,10 +69,13 @@ void pdaf::kalmanGain() {
 void pdaf::equivalentInnovation(const std::vector<Eigen::Vector2f>& mess) {
     Eigen::Vector2f sum(0.0f, 0.0f);
     Bi[0] = calculateBi(mess, 0);
+    LOG_INFO("start");
     for (size_t i = 0; i < mess.size(); i++) {
         Bi[i + 1] = calculateBi(mess, i + 1);
         sum += Bi[i + 1] * V[i + 1];
+        LOG_INFO("Bi[", i + 1, "]=", Bi[i + 1] * V[i + 1]);
     }
+    LOG_INFO("stop");
     EV = sum;
     // log(std::cout, "EV \n", EV);
 }
@@ -147,11 +150,15 @@ void pdaf::errorCovUpdate(const std::vector<Eigen::Vector2f>& mess) {
     Eigen::Matrix2f sum = Eigen::Matrix2f::Zero();
     B0 = calculateBi(mess, 0);
     Pc = P - K * S * K.transpose();
-
+    LOG_INFO("begin Ps calculation");
     for (size_t i = 0; i < mess.size(); i++) {
         Bi[i + 1] = calculateBi(mess, i + 1);
+        LOG_INFO("Bi[", i + 1, "]=", Bi[i + 1]);
+
         sum += Bi[i + 1] * V[i + 1] * V[i + 1].transpose();
     }
+    LOG_INFO("end");
+
     Ps = K * (sum - EV * EV.transpose()) * K.transpose();
 
     P = B0 * P + (1 - B0) * Pc + Ps;
