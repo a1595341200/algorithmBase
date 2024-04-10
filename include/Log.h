@@ -2,7 +2,7 @@
  * @Author: yao.xie 1595341200@qq.com
  * @Date: 2024-03-23 20:32:04
  * @LastEditors: yao.xie 1595341200@qq.com
- * @LastEditTime: 2024-04-10 14:38:01
+ * @LastEditTime: 2024-04-10 22:11:41
  * @FilePath: /cplusplus/submodule/algorithmBase/include/Log.h
  * @Description:
  *
@@ -12,12 +12,6 @@
 #include <iostream>
 #include <vector>
 #define LOG_INFO(...) algorithmBase::log(std::cout, __FILE__, " ", __LINE__, " : ", __VA_ARGS__)
-namespace algorithmBase {
-template <typename... Args>
-void log(std::ostream& os, Args&&... args) {
-    (os << ... << args) << std::endl;
-}
-
 template <typename T>
 std::ostream& operator<<(std::ostream& os, const std::vector<T>& items) {
     os << "start vector: \n";
@@ -28,4 +22,9 @@ std::ostream& operator<<(std::ostream& os, const std::vector<T>& items) {
     return os;
 }
 
+namespace algorithmBase {
+template <typename... Args>
+void log(std::ostream& os, Args&&... args) {
+    (os << ... << args) << std::endl;
+}
 }  // namespace algorithmBase
