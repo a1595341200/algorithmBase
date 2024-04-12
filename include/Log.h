@@ -2,7 +2,7 @@
  * @Author: yao.xie 1595341200@qq.com
  * @Date: 2024-03-23 20:32:04
  * @LastEditors: yao.xie 1595341200@qq.com
- * @LastEditTime: 2024-04-10 22:11:41
+ * @LastEditTime: 2024-04-12 22:01:28
  * @FilePath: /cplusplus/submodule/algorithmBase/include/Log.h
  * @Description:
  *
@@ -11,7 +11,12 @@
 #pragma once
 #include <iostream>
 #include <vector>
-#define LOG_INFO(...) algorithmBase::log(std::cout, __FILE__, " ", __LINE__, " : ", __VA_ARGS__)
+#ifndef TAG
+#define TAG "null"
+#endif
+
+#define LOG_INFO(...) \
+    algorithmBase::log(std::cout, __FILE__, " ", __LINE__, " : ", TAG, " ", __VA_ARGS__)
 template <typename T>
 std::ostream& operator<<(std::ostream& os, const std::vector<T>& items) {
     os << "start vector: \n";
