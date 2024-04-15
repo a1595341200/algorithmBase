@@ -2,7 +2,7 @@
  * @Author: yao.xie 1595341200@qq.com
  * @Date: 2024-04-12 13:23:54
  * @LastEditors: yao.xie 1595341200@qq.com
- * @LastEditTime: 2024-04-12 14:07:49
+ * @LastEditTime: 2024-04-15 16:43:49
  * @FilePath: /cplusplus/submodule/algorithmBase/include/CovarianceIntersection.h
  * @Description:
  *
@@ -25,4 +25,5 @@ public:
     Eigen::VectorXf X;
     Eigen::MatrixXf R;
     Eigen::VectorXf H;
+    double w{1};
 };
