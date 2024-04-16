@@ -28,6 +28,7 @@ target_link_libraries(demo
 target_include_directories(${PROJECT_N}
     PUBLIC
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include/transforms3d>
     $<INSTALL_INTERFACE:include/${PROJECT_N}>
 )
 
@@ -52,6 +53,11 @@ install(EXPORT
             ${PROJECT_N}
             NAMESPACE  "algorithmBase::"
             DESTINATION  lib/cmake/${PROJECT_N}
+)
+
+install(DIRECTORY
+            ${CMAKE_CURRENT_SOURCE_DIR}/include/transforms3d
+            DESTINATION include/${PROJECT_N}
 )
 
 include(CMakePackageConfigHelpers)
