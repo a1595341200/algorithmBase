@@ -2,7 +2,7 @@
  * @Author: yao.xie 1595341200@qq.com
  * @Date: 2024-03-11 15:07:34
  * @LastEditors: yao.xie 1595341200@qq.com
- * @LastEditTime: 2024-04-17 14:27:56
+ * @LastEditTime: 2024-04-17 17:59:08
  * @FilePath: /cplusplus/submodule/algorithmBase/src/DynamicModel.cpp
  * @Description:
  *
@@ -170,7 +170,7 @@ Eigen::MatrixXd CT::computationalQ(float dt) {
 }
 
 CV::CV() {
-    A = Eigen::VectorXd::Zero(4);
+    A = Eigen::MatrixXd::Zero(4, 4);
     Q = Eigen::MatrixXd::Zero(4, 4);
     // clang-format off
     A << 1, 0, dt, 0, 
@@ -186,6 +186,29 @@ CV::CV() {
 }
 
 void CV::prediction(Eigen::VectorXd& X, Eigen::MatrixXd& P, float dt) {
+    computationalA(dt);
+    computationalQ(dt);
     X = A * X;
     P = A * P * A.transpose() + Q;
+}
+
+Eigen::MatrixXd CV::computationalA(float dt) {
+    A(0, 2) = dt;
+    A(1, 3) = dt;
+    return A;
+}
+
+Eigen::MatrixXd CV::computationalQ(float dt) {
+    Q(0, 0) = std::pow(dt, 3) / 3;
+    Q(0, 1) = std::pow(dt, 2) / 2;
+
+    Q(1, 0) = std::pow(dt, 2) / 2;
+    Q(1, 1) = dt;
+
+    Q(2, 2) = std::pow(dt, 3) / 3;
+    Q(2, 3) = std::pow(dt, 2) / 2;
+
+    Q(3, 2) = std::pow(dt, 2) / 2;
+    Q(3, 3) = dt;
+    return Q;
 }

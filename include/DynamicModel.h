@@ -2,7 +2,7 @@
  * @Author: yao.xie 1595341200@qq.com
  * @Date: 2024-03-11 15:04:28
  * @LastEditors: yao.xie 1595341200@qq.com
- * @LastEditTime: 2024-04-17 14:58:03
+ * @LastEditTime: 2024-04-17 17:54:07
  * @FilePath: /cplusplus/submodule/algorithmBase/include/DynamicModel.h
  * @Description:
  *
@@ -60,9 +60,9 @@ public:
     void prediction(Eigen::VectorXd& X, Eigen::MatrixXd& P, float dt) override;
 
 private:
-    // Eigen::MatrixXd computationalA(float dt);
+    Eigen::MatrixXd computationalA(float dt);
 
-    // Eigen::MatrixXd computationalQ(float dt);
+    Eigen::MatrixXd computationalQ(float dt);
 
     Eigen::MatrixXd A;  ///< The state transition matrix.
     Eigen::MatrixXd Q;  ///< The process noise covariance matrix.
