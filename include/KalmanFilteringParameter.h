@@ -2,7 +2,7 @@
  * @Author: yao.xie 1595341200@qq.com
  * @Date: 2024-03-11 14:41:36
  * @LastEditors: yao.xie 1595341200@qq.com
- * @LastEditTime: 2024-03-25 16:19:38
+ * @LastEditTime: 2024-04-17 13:17:26
  * @FilePath: /cplusplus/submodule/algorithmBase/include/KalmanFilteringParameter.h
  * @Description:
  *
@@ -13,6 +13,7 @@
 #include <memory>
 
 #include <eigen3/Eigen/Dense>
+
 #include "DynamicModel.h"
 
 class KalmanFilteringParameter {
@@ -26,7 +27,7 @@ public:
     Eigen::MatrixXd Q;  //状态白噪声
     Eigen::MatrixXd R;  //量测白噪声
     Eigen::MatrixXd K;  //卡尔曼滤波增益
-    void prediction(Eigen::VectorXd& X, float dt);
+    void prediction(Eigen::VectorXd& X, Eigen::MatrixXd& P, float dt);
 };
 
 class UKFKalmanFilteringParameter {
@@ -43,8 +44,8 @@ public:
     Eigen::VectorXd zminus;          //实际量测与预测量测差值
     Eigen::VectorXd wm;              //状态权重
     Eigen::VectorXd wc;              //方差权重
-    float alpha{1};                   //权重参数影响的是Sigma 点远离均值的程度
-    float beta{2};                    //权重参数影响的是Sigma 点远离均值的程度
+    float alpha{1};                  //权重参数影响的是Sigma 点远离均值的程度
+    float beta{2};                   //权重参数影响的是Sigma 点远离均值的程度
     float lamda{};                   //超参数,sigma点越小越集中
 };
 
