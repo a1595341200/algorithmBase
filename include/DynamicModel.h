@@ -2,7 +2,7 @@
  * @Author: yao.xie 1595341200@qq.com
  * @Date: 2024-03-11 15:04:28
  * @LastEditors: yao.xie 1595341200@qq.com
- * @LastEditTime: 2024-04-17 17:54:07
+ * @LastEditTime: 2024-05-08 17:07:16
  * @FilePath: /cplusplus/submodule/algorithmBase/include/DynamicModel.h
  * @Description:
  *
@@ -67,6 +67,7 @@ private:
     Eigen::MatrixXd A;  ///< The state transition matrix.
     Eigen::MatrixXd Q;  ///< The process noise covariance matrix.
     float dt{};         ///< The time step for prediction.
+    float Pq{0.01};
 };
 
 /**
@@ -88,6 +89,7 @@ private:
     Eigen::MatrixXd Q;  ///< The process noise covariance matrix.
     float dt{};
     float w{};
+    float Pw{0.01};
 };
 
 /**
@@ -143,6 +145,7 @@ private:
     float dt{0};        ///< The time step for prediction.
     Eigen::MatrixXd A;  ///< The state transition matrix.
     Eigen::MatrixXd Q;  ///< The process noise covariance matrix.
+    Eigen::MatrixXd Pacc;  ///< The process noise covariance matrix.
 };
 
 #endif /* DYNAMICMODEL_H */

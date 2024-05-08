@@ -2,7 +2,7 @@
  * @Author: yao.xie 1595341200@qq.com
  * @Date: 2024-03-11 15:07:34
  * @LastEditors: yao.xie 1595341200@qq.com
- * @LastEditTime: 2024-04-17 17:59:08
+ * @LastEditTime: 2024-05-10 16:46:05
  * @FilePath: /cplusplus/submodule/algorithmBase/src/DynamicModel.cpp
  * @Description:
  *
@@ -52,6 +52,7 @@ void CTRA::prediction(Eigen::VectorXd& X, Eigen::MatrixXd& P, float dt) {
 CA::CA() {
     A = Eigen::MatrixXd::Zero(6, 6);
     Q = Eigen::MatrixXd::Zero(6, 6);
+    Pacc.resize(2, 2);
     // clang-format off
     A << 1, 0, dt, 0, 0.5*std::pow(dt,2),  0,
          0, 1, 0, dt, 0,                   0.5*std::pow(dt,2),
@@ -66,6 +67,8 @@ CA::CA() {
          0,                   std::pow(dt,4)/8,    0,                std::pow(dt,3)/3, 0,                std::pow(dt,2)/2,
          std::pow(dt,3)/6,    0,                   std::pow(dt,2)/2, 0,                dt,               0,
          0,                   std::pow(dt,3)/6,    0,                std::pow(dt,2)/2, 0,                dt;
+    Pacc << 0.01, 0,
+            0,    0.01;
     // clang-format on
 }
 
@@ -73,7 +76,7 @@ void CA::prediction(Eigen::VectorXd& X, Eigen::MatrixXd& P, float dt) {
     computationalA(dt);
     computationalQ(dt);
     X = A * X;
-    P = A * P * A.transpose() + Q;
+    P = A * P * A.transpose() + Pacc * Q;
 }
 
 Eigen::MatrixXd CA::computationalA(float dt) {
@@ -134,7 +137,7 @@ void CT::prediction(Eigen::VectorXd& X, Eigen::MatrixXd& P, float dt) {
     computationalA(dt);
     computationalQ(dt);
     X.head(4) = A * X.head(4);
-    P = A * P * A.transpose() + Q;
+    P = A * P * A.transpose() + Pw * Q;
 }
 
 Eigen::MatrixXd CT::computationalA(float dt) {
@@ -189,7 +192,7 @@ void CV::prediction(Eigen::VectorXd& X, Eigen::MatrixXd& P, float dt) {
     computationalA(dt);
     computationalQ(dt);
     X = A * X;
-    P = A * P * A.transpose() + Q;
+    P = A * P * A.transpose() + Pq * Q;
 }
 
 Eigen::MatrixXd CV::computationalA(float dt) {
