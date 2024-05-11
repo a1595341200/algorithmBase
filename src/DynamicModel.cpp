@@ -2,7 +2,7 @@
  * @Author: yao.xie 1595341200@qq.com
  * @Date: 2024-03-11 15:07:34
  * @LastEditors: yao.xie 1595341200@qq.com
- * @LastEditTime: 2024-05-10 16:46:05
+ * @LastEditTime: 2024-05-11 11:28:27
  * @FilePath: /cplusplus/submodule/algorithmBase/src/DynamicModel.cpp
  * @Description:
  *
@@ -52,8 +52,17 @@ void CTRA::prediction(Eigen::VectorXd& X, Eigen::MatrixXd& P, float dt) {
 CA::CA() {
     A = Eigen::MatrixXd::Zero(6, 6);
     Q = Eigen::MatrixXd::Zero(6, 6);
-    Pacc.resize(2, 2);
+    Pacc.resize(6, 6);
+    double fx = 0.01;
+    double fy = 0.01;
     // clang-format off
+    Pacc << fx, 0, 0, 0, 0, 0,
+            0, fy, 0, 0, 0, 0,
+            0, 0, fx, 0, 0, 0,
+            0, 0, 0, fy, 0, 0,
+            0, 0, 0, 0, fx, 0,
+            0, 0, 0, 0, 0, fy;
+
     A << 1, 0, dt, 0, 0.5*std::pow(dt,2),  0,
          0, 1, 0, dt, 0,                   0.5*std::pow(dt,2),
          0, 0, 1, 0,  dt,                  0,
@@ -67,8 +76,6 @@ CA::CA() {
          0,                   std::pow(dt,4)/8,    0,                std::pow(dt,3)/3, 0,                std::pow(dt,2)/2,
          std::pow(dt,3)/6,    0,                   std::pow(dt,2)/2, 0,                dt,               0,
          0,                   std::pow(dt,3)/6,    0,                std::pow(dt,2)/2, 0,                dt;
-    Pacc << 0.01, 0,
-            0,    0.01;
     // clang-format on
 }
 
