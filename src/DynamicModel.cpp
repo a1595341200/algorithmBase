@@ -2,7 +2,7 @@
  * @Author: yao.xie 1595341200@qq.com
  * @Date: 2024-03-11 15:07:34
  * @LastEditors: yao.xie 1595341200@qq.com
- * @LastEditTime: 2024-05-11 11:28:27
+ * @LastEditTime: 2024-05-13 10:48:18
  * @FilePath: /cplusplus/submodule/algorithmBase/src/DynamicModel.cpp
  * @Description:
  *
@@ -77,6 +77,7 @@ CA::CA() {
          std::pow(dt,3)/6,    0,                   std::pow(dt,2)/2, 0,                dt,               0,
          0,                   std::pow(dt,3)/6,    0,                std::pow(dt,2)/2, 0,                dt;
     // clang-format on
+    H = Eigen::MatrixXd::Identity(6, 6);
 }
 
 void CA::prediction(Eigen::VectorXd& X, Eigen::MatrixXd& P, float dt) {
@@ -84,6 +85,13 @@ void CA::prediction(Eigen::VectorXd& X, Eigen::MatrixXd& P, float dt) {
     computationalQ(dt);
     X = A * X;
     P = A * P * A.transpose() + Pacc * Q;
+}
+
+void CA::update(Eigen::VectorXd& X, Eigen::MatrixXd& P, const Eigen::VectorXd& Z,
+                const Eigen::MatrixXd& R) {
+    auto K = P * H.transpose() * (H * P * H.transpose() + R).inverse();
+    X = X + K * (Z - H * X);
+    P = (Eigen::MatrixXd::Identity(6, 6) - K * H) * P;
 }
 
 Eigen::MatrixXd CA::computationalA(float dt) {
