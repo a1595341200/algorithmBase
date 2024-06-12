@@ -36,6 +36,7 @@ target_link_libraries(${PROJECT_N}
     PUBLIC 
     fmt::fmt
     app::app
+    pthread
 )
 
 install(TARGETS ${PROJECT_N} 
