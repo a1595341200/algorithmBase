@@ -2,7 +2,7 @@
  * @Author: yao.xie 1595341200@qq.com
  * @Date: 2024-06-12 14:46:58
  * @LastEditors: yao.xie 1595341200@qq.com
- * @LastEditTime: 2024-06-12 14:53:29
+ * @LastEditTime: 2024-06-20 13:48:53
  * @FilePath: /cplusplus/submodule/algorithmBase/src/Utils.cpp
  * @Description:
  *
@@ -18,20 +18,20 @@ std::vector<Eigen::Vector2f> calculateCornerPointsByCenterPoint(
     float s = std::sin(objectAttribute.heading);
 
     res.emplace_back(
-        centerPoint.x() + objectAttribute.width / 2.0f * c - objectAttribute.height / 2.0f * s,
-        centerPoint.y() - objectAttribute.width / 2.0f * s - objectAttribute.height / 2.0f * c);
+        centerPoint.x() + objectAttribute.length / 2.0f * c - objectAttribute.width / 2.0f * s,
+        centerPoint.y() - objectAttribute.length / 2.0f * s - objectAttribute.width / 2.0f * c);
 
     res.emplace_back(
-        centerPoint.x() - objectAttribute.width / 2.0f * c - objectAttribute.height / 2.0f * s,
-        centerPoint.y() + objectAttribute.width / 2.0f * s - objectAttribute.height / 2.0f * c);
+        centerPoint.x() - objectAttribute.length / 2.0f * c - objectAttribute.width / 2.0f * s,
+        centerPoint.y() + objectAttribute.length / 2.0f * s - objectAttribute.width / 2.0f * c);
 
     res.emplace_back(
-        centerPoint.x() - objectAttribute.width / 2.0f * c + objectAttribute.height / 2.0f * s,
-        centerPoint.y() + objectAttribute.width / 2.0f * s + objectAttribute.height / 2.0f * c);
+        centerPoint.x() - objectAttribute.length / 2.0f * c + objectAttribute.width / 2.0f * s,
+        centerPoint.y() + objectAttribute.length / 2.0f * s + objectAttribute.width / 2.0f * c);
 
     res.emplace_back(
-        centerPoint.x() + objectAttribute.width / 2.0f * c + objectAttribute.height / 2.0f * s,
-        centerPoint.y() - objectAttribute.width / 2.0f * s + objectAttribute.height / 2.0f * c);
+        centerPoint.x() + objectAttribute.length / 2.0f * c + objectAttribute.width / 2.0f * s,
+        centerPoint.y() - objectAttribute.length / 2.0f * s + objectAttribute.width / 2.0f * c);
     return res;
 }
 
@@ -61,6 +61,19 @@ std::vector<Eigen::Vector2f> nearestSideToNearestPoint(double x, double y, doubl
     return {Eigen::Vector2f(x + r1x, y + r1y), Eigen::Vector2f(x + r2x, y + r2y),
             Eigen::Vector2f(x - r1x, y - r1y), Eigen::Vector2f(x - r2x, y - r2y),
             Eigen::Vector2f(x + r1x, y + r1y)};
+}
+
+Radian calculateAngleBetweenVectors(Eigen::Vector2d& v1, Eigen::Vector2d& v2) {
+    return std::acos(v1.dot(v2) / (v1.norm() * v2.norm()));
+}
+
+Radian calculateAngleBetweenVectors2(const Eigen::Vector2d& v1, const Eigen::Vector2d& v2) {
+    double res = std::acos(v1.dot(v2) / (v1.norm() * v2.norm()));
+    double d = std::asin(v1.dot(v2) / (v1.norm() * v2.norm()));
+    if (d < 0) {
+        res = -res;
+    }
+    return res;
 }
 
 }  // namespace algorithmBase
