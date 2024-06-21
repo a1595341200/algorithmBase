@@ -11,7 +11,7 @@ set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/out)
 set(CMAKE_INSTALL_PREFIX ${CMAKE_BINARY_DIR}/../../build_install)
 find_package(fmt REQUIRED)
 find_package(app REQUIRED)
-file(GLOB root_header_files "${CMAKE_CURRENT_SOURCE_DIR}/include/*.h")
+file(GLOB root_header_files "${CMAKE_CURRENT_SOURCE_DIR}/include/*.h" "${CMAKE_CURRENT_SOURCE_DIR}/include/*.hpp")
 file(GLOB root_src_files "${CMAKE_CURRENT_SOURCE_DIR}/src/*.cpp")
 
 add_library(${PROJECT_N} ${root_header_files} ${root_src_files})
