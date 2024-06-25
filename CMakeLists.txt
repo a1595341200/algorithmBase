@@ -28,7 +28,6 @@ target_link_libraries(demo
 target_include_directories(${PROJECT_N}
     PUBLIC
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
-    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include/transforms3d>
     $<INSTALL_INTERFACE:include/${PROJECT_N}>
 )
 
@@ -58,6 +57,7 @@ install(EXPORT
 
 install(DIRECTORY
             ${CMAKE_CURRENT_SOURCE_DIR}/include/transforms3d
+            ${CMAKE_CURRENT_SOURCE_DIR}/include/sophus
             DESTINATION include/${PROJECT_N}
 )
 
