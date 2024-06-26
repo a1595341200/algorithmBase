@@ -38,6 +38,13 @@ target_link_libraries(${PROJECT_N}
     pthread
 )
 
+option(BUILD_TESTS "Build Tests" OFF)
+if(BUILD_TESTS)
+    include(CTest)
+    enable_testing()
+    add_subdirectory(tests)
+endif()
+
 install(TARGETS ${PROJECT_N} 
             EXPORT ${PROJECT_N}
             RUNTIME DESTINATION bin
