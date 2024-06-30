@@ -64,7 +64,7 @@ UKF::UKF(std::string smodel, int state_n, int mea_n, Eigen::MatrixXd Q, Eigen::M
 
     parameter.zminus = Eigen::VectorXd(mea_n);
     parameter.zminus.fill(0.0);
-};
+}
 
 // state: position_x, position_y,velocity, yaw, yaw_rate
 void UKF::initialization(Eigen::VectorXd& X, Eigen::MatrixXd& P, float time) {
@@ -140,7 +140,7 @@ void UKF::prediction(float ntime) {
         }
 
         if (model_ == 1) {  // CV
-            float px_pre, py_pre, velo_pre, yaw_pre, yawd_pre, a_pre;
+            float px_pre{}, py_pre{}, velo_pre{}, yaw_pre{}, yawd_pre{}, a_pre{};
             px_pre = px_pre + velo_k * deltat * cos(yaw_k);
             py_pre = py_k + velo_k * deltat * sin(yaw_k);
 
@@ -155,7 +155,7 @@ void UKF::prediction(float ntime) {
             parameter.sigmaPointsPre(5, i) = a_k;
 
         } else if (model_ == 2) {  // CTRV
-            float px_pre, py_pre, velo_pre, yaw_pre, yawd_pre, a_pre;
+            float px_pre{}, py_pre{}, velo_pre{}, yaw_pre{}, yawd_pre{}, a_pre{};
             if (fabs(yawd_k) > 0.001) {
                 px_pre = px_pre +
                          velo_k / yawd_k * (std::sin(yaw_k + yawd_k * deltat) - std::sin(yaw_k));
@@ -230,8 +230,8 @@ void UKF::prediction(float ntime) {
 
         parameter.kfp.P += parameter.kfp.Q;
         // std::cout << "计算预测协方差P_ " << '\n' << parameter.kfp.P << std::endl;
-    } catch (std::bad_alloc) {
-        std::cout << "erro" << std::endl;
+    } catch (std::bad_alloc& e) {
+        std::cout << "erro " << e.what() << std::endl;
         return;
     }
 }

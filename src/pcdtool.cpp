@@ -1,3 +1,13 @@
+/*
+ * @Author: yao.xie 1595341200@qq.com
+ * @Date: 2024-06-30 21:44:03
+ * @LastEditors: yao.xie 1595341200@qq.com
+ * @LastEditTime: 2024-06-30 21:44:04
+ * @FilePath: /cplusplus/submodule/algorithmBase/src/pcdtool.cpp
+ * @Description: 
+ * 
+ * Copyright (c) 2024 by ${git_name_email}, All Rights Reserved. 
+ */
 #include <iostream>
 #include <transforms3d/pcdtool.h>
 using namespace std;
@@ -23,7 +33,7 @@ void RadiusFilter(PointCloud &cloud, PointCloud &cloud_filtered, double radius,
     query_pt[2] = cloud.pts[i].z();
     size_t nMatches =
         tree.radiusSearch(&query_pt[0], radius, ret_matches, params);
-    if (nMatches >= min_pts) {
+    if (nMatches >= (size_t)min_pts) {
       cloud_filtered.pts.push_back(cloud.pts[i]);
     }
   }

@@ -2,7 +2,7 @@
  * @Author: yao.xie 1595341200@qq.com
  * @Date: 2024-03-20 21:53:49
  * @LastEditors: yao.xie 1595341200@qq.com
- * @LastEditTime: 2024-04-16 18:03:46
+ * @LastEditTime: 2024-06-30 21:44:38
  * @FilePath: /cplusplus/submodule/algorithmBase/include/DataGenerator.h
  * @Description:
  *
@@ -41,11 +41,11 @@ std::vector<T> generateNormalDistributionData(double mean, double stdDev, size_t
 template <typename T = double>
 std::pair<std::vector<T>, std::vector<T>> generatingGaussianEquation(double mean, double stdDev) {
     std::pair<std::vector<T>, std::vector<T>> res;
-    static auto gaussian = [](double mean, double stdDev, double x) {
+    static auto gaussian = [=](double x) {
         return std::exp(-0.5 * std::pow((x - mean) / stdDev, 2)) / (std::sqrt(2 * M_PI) * stdDev);
     };
     for (double x = mean - 5.0; x <= mean + 5.0; x += 0.1) {
-        double y = gaussian(mean, stdDev, x);
+        double y = gaussian(x);
         res.first.push_back(x);
         res.second.push_back(y);
     }

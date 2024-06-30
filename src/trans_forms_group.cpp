@@ -2,7 +2,7 @@
  * @Descripttion:
  * @Author: sangxin
  * @Date: 2021-05-01 21:04:19
- * @LastEditTime: 2021-05-02 23:39:20
+ * @LastEditTime: 2024-06-30 21:42:45
  */
 #include <cmath>
 #include <deque>
@@ -22,7 +22,7 @@ Matrix4d TransFormsGroup::getTransForm(const std::string &start,
   {
     return matrix;
   }
-  for (int i = 0; i < paths.size() - 1; i++)
+  for (size_t i = 0; i < paths.size() - 1; i++)
   {
     for (Child c : tfg[paths[i]])
     {
@@ -66,7 +66,7 @@ Matrix4d TransFormsGroup::pushTransForm(const std::string &parent,
   {
     std::vector<Child> childs = tfg[parent];
     bool has_child = false;
-    for (int i = 0; i < childs.size(); i++)
+    for (size_t i = 0; i < childs.size(); i++)
     {
       if (childs[i].name == child)
       {
@@ -101,7 +101,7 @@ Matrix4d TransFormsGroup::pushTransForm(const std::string &parent,
   {
     std::vector<Child> childs = tfg[child];
     bool has_child = false;
-    for (int i = 0; i < childs.size(); i++)
+    for (size_t i = 0; i < childs.size(); i++)
     {
       if (childs[i].name == child)
       {
@@ -140,7 +140,7 @@ std::string TransFormsGroup::toString()
   {
     // cout << "node:" << iter->first << endl;
     str += "node:" + iter->first + "\n";
-    for (int i = 0; i < iter->second.size(); i++)
+    for (size_t i = 0; i < iter->second.size(); i++)
     {
       // cout <<"\tchild" << i << " : " << iter->second[i].name << endl;
       // cout <<"\t\tmatrix : ";

@@ -2,7 +2,7 @@
  * @Author: yao.xie 1595341200@qq.com
  * @Date: 2024-03-11 14:41:36
  * @LastEditors: yao.xie 1595341200@qq.com
- * @LastEditTime: 2024-04-17 13:17:38
+ * @LastEditTime: 2024-06-30 21:36:43
  * @FilePath: /cplusplus/submodule/algorithmBase/src/KalmanFilteringParameter.cpp
  * @Description:
  *
@@ -11,6 +11,6 @@
 
 #include "KalmanFilteringParameter.h"
 
-void KalmanFilteringParameter::prediction(Eigen::VectorXd& X, Eigen::MatrixXd& P, float dt) {
-    dynamicModel->prediction(X, P, dt);
+void KalmanFilteringParameter::prediction(Eigen::VectorXd& _X, Eigen::MatrixXd& _P, float dt) {
+    dynamicModel->prediction(_X, _P, dt);
 }

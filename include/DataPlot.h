@@ -2,7 +2,7 @@
  * @Author: yao.xie 1595341200@qq.com
  * @Date: 2024-03-21 21:51:52
  * @LastEditors: yao.xie 1595341200@qq.com
- * @LastEditTime: 2024-03-21 22:33:27
+ * @LastEditTime: 2024-06-30 21:15:25
  * @FilePath: /cplusplus/submodule/algorithmBase/include/DataPlot.h
  * @Description:
  *
@@ -21,7 +21,10 @@ public:
     void Update() override;
     void addPlot(const std::string& plotName);
     void addPlot(const std::string& plotName, const std::string& subPlotName);
-    void addData(const std::string& plotName, float x, float y);
+    template <typename T, typename U>
+    void addData(const std::string& plotName, T x, U y) {
+        addData(plotName, static_cast<double>(x), static_cast<double>(y));
+    }
     void addData(const std::string& plotName, const std::string& subPlotName, float x, float y);
 
 private:

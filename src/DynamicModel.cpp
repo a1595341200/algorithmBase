@@ -2,7 +2,7 @@
  * @Author: yao.xie 1595341200@qq.com
  * @Date: 2024-03-11 15:07:34
  * @LastEditors: yao.xie 1595341200@qq.com
- * @LastEditTime: 2024-05-13 10:48:18
+ * @LastEditTime: 2024-06-30 21:37:58
  * @FilePath: /cplusplus/submodule/algorithmBase/src/DynamicModel.cpp
  * @Description:
  *
@@ -63,19 +63,19 @@ CA::CA() {
             0, 0, 0, 0, fx, 0,
             0, 0, 0, 0, 0, fy;
 
-    A << 1, 0, dt, 0, 0.5*std::pow(dt,2),  0,
-         0, 1, 0, dt, 0,                   0.5*std::pow(dt,2),
-         0, 0, 1, 0,  dt,                  0,
-         0, 0, 0, 1,  0,                   dt,
+    A << 1, 0, mDt, 0, 0.5*std::pow(mDt,2),  0,
+         0, 1, 0, mDt, 0,                   0.5*std::pow(mDt,2),
+         0, 0, 1, 0,  mDt,                  0,
+         0, 0, 0, 1,  0,                   mDt,
          0, 0, 0, 0,  1,                   0,
          0, 0, 0, 0,  0,                   1;
 
-    Q << 0.05*std::pow(dt,5), 0,                   std::pow(dt,4)/8, 0,                std::pow(dt,3)/6, 0,
-         0,                   0.05*std::pow(dt,5), 0,                std::pow(dt,4)/8, 0,                std::pow(dt,3)/6,
-         std::pow(dt,4)/8,    0,                   std::pow(dt,3)/3, 0,                std::pow(dt,2)/2, 0,
-         0,                   std::pow(dt,4)/8,    0,                std::pow(dt,3)/3, 0,                std::pow(dt,2)/2,
-         std::pow(dt,3)/6,    0,                   std::pow(dt,2)/2, 0,                dt,               0,
-         0,                   std::pow(dt,3)/6,    0,                std::pow(dt,2)/2, 0,                dt;
+    Q << 0.05*std::pow(mDt,5), 0,                   std::pow(mDt,4)/8, 0,                std::pow(mDt,3)/6, 0,
+         0,                   0.05*std::pow(mDt,5), 0,                std::pow(mDt,4)/8, 0,                std::pow(mDt,3)/6,
+         std::pow(mDt,4)/8,    0,                   std::pow(mDt,3)/3, 0,                std::pow(mDt,2)/2, 0,
+         0,                   std::pow(mDt,4)/8,    0,                std::pow(mDt,3)/3, 0,                std::pow(mDt,2)/2,
+         std::pow(mDt,3)/6,    0,                   std::pow(mDt,2)/2, 0,                mDt,               0,
+         0,                   std::pow(mDt,3)/6,    0,                std::pow(mDt,2)/2, 0,                mDt;
     // clang-format on
     H = Eigen::MatrixXd::Identity(6, 6);
 }
@@ -135,15 +135,15 @@ CT::CT() {
     A = Eigen::MatrixXd::Zero(4, 4);
     Q = Eigen::MatrixXd::Zero(4, 4);
     // clang-format off
-    A << 1, std::sin(w*dt)/w,        0, -(1 - std::cos(w*dt))/w,
-         0, std::cos(w*dt),          0, -sin(w*dt), 
-         0, (1 - std::cos(w*dt))/w, 1, std::sin(w*dt)/w, 
-         0, std::sin(w*dt),          0, cos(w*dt);
+    A << 1, std::sin(w*mDt)/w,        0, -(1 - std::cos(w*mDt))/w,
+         0, std::cos(w*mDt),          0, -sin(w*mDt), 
+         0, (1 - std::cos(w*mDt))/w, 1, std::sin(w*mDt)/w, 
+         0, std::sin(w*mDt),          0, cos(w*mDt);
 
-    Q << std::pow(dt,3)/3, std::pow(dt,2)/2, 0,                     0,
-         std::pow(dt,2)/2, dt,                    0,                     0,
-         0,                     0,                     std::pow(dt,3)/3, std::pow(dt,2)/2,
-         0,                     0,                     std::pow(dt,2)/2, dt;
+    Q << std::pow(mDt,3)/3, std::pow(mDt,2)/2, 0,                     0,
+         std::pow(mDt,2)/2, mDt,                    0,                     0,
+         0,                     0,                     std::pow(mDt,3)/3, std::pow(mDt,2)/2,
+         0,                     0,                     std::pow(mDt,2)/2, mDt;
     // clang-format on
 }
 
@@ -191,15 +191,15 @@ CV::CV() {
     A = Eigen::MatrixXd::Zero(4, 4);
     Q = Eigen::MatrixXd::Zero(4, 4);
     // clang-format off
-    A << 1, 0, dt, 0, 
-         0, 1, 0,  dt, 
+    A << 1, 0, mDt, 0, 
+         0, 1, 0,  mDt, 
          0, 0, 1,  0,  
          0, 0, 0,  1;
 
-    Q << std::pow(dt,3)/3, std::pow(dt,2)/2,  0, 0,
-         std::pow(dt,2)/2, dt,                0, 0,
-         0,                0,                std::pow(dt,3)/3, std::pow(dt,2)/2,
-         0,                0,                std::pow(dt,2)/2,                dt;
+    Q << std::pow(mDt,3)/3, std::pow(mDt,2)/2,  0, 0,
+         std::pow(mDt,2)/2, mDt,                0, 0,
+         0,                0,                std::pow(mDt,3)/3, std::pow(mDt,2)/2,
+         0,                0,                std::pow(mDt,2)/2,                mDt;
     // clang-format on
 }
 

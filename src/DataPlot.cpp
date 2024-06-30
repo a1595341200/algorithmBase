@@ -2,7 +2,7 @@
  * @Author: yao.xie 1595341200@qq.com
  * @Date: 2024-03-22 15:58:59
  * @LastEditors: yao.xie 1595341200@qq.com
- * @LastEditTime: 2024-04-12 14:16:49
+ * @LastEditTime: 2024-06-30 21:20:34
  * @FilePath: /cplusplus/submodule/algorithmBase/src/DataPlot.cpp
  * @Description:
  *
@@ -25,8 +25,8 @@ void DataPlot::Update() {
             ImPlot::SetupAxes("x", "y");
             ImPlot::SetNextLineStyle(mColors[plotName], 2.0);
             for (auto& [subPlotName, data] : mData[plotName]) {
-                ImPlot::PlotLine(subPlotName.c_str(), &data[0].x, &data[0].y, data.size(), 0, 0,
-                                 2 * sizeof(float));
+                ImPlot::PlotLine(subPlotName.c_str(), &data[0].x, &data[0].y, (int)data.size(), 0,
+                                 0, 2 * sizeof(float));
             }
             ImPlot::EndPlot();
         }
@@ -38,6 +38,7 @@ void DataPlot::addPlot(const std::string& plotName) {
 }
 
 void DataPlot::addPlot(const std::string& plotName, const std::string& subPlotName) {
+    (void)subPlotName;
     auto it = std::find(mPlotNames.begin(), mPlotNames.end(), plotName);
     if (it == mPlotNames.end()) {
         mPlotNames.push_back(plotName);
@@ -45,9 +46,7 @@ void DataPlot::addPlot(const std::string& plotName, const std::string& subPlotNa
     mCheckBoxes[plotName] = false;
     mColors[plotName] = RandomColor();
 }
-void DataPlot::addData(const std::string& plotName, float x, float y) {
-    addData(plotName, plotName, x, y);
-}
+
 void DataPlot::addData(const std::string& plotName, const std::string& subPlotName, float x,
                        float y) {
     auto it = std::find(mPlotNames.begin(), mPlotNames.end(), plotName);

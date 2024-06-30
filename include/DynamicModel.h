@@ -2,7 +2,7 @@
  * @Author: yao.xie 1595341200@qq.com
  * @Date: 2024-03-11 15:04:28
  * @LastEditors: yao.xie 1595341200@qq.com
- * @LastEditTime: 2024-05-13 10:47:45
+ * @LastEditTime: 2024-06-30 21:30:22
  * @FilePath: /cplusplus/submodule/algorithmBase/include/DynamicModel.h
  * @Description:
  *
@@ -30,8 +30,9 @@ public:
      */
     virtual void prediction(Eigen::VectorXd& X, Eigen::MatrixXd& P, float dt) = 0;
 
-    virtual void update(Eigen::VectorXd& X, Eigen::MatrixXd& P, const Eigen::VectorXd& Z,
-                        const Eigen::MatrixXd& R){};
+    virtual void update(Eigen::VectorXd& X [[maybe_unused]], Eigen::MatrixXd& P [[maybe_unused]],
+                        const Eigen::VectorXd& Z [[maybe_unused]],
+                        const Eigen::MatrixXd& R [[maybe_unused]]){};
     /**
      * @brief Default virtual destructor.
      */
@@ -69,8 +70,8 @@ private:
 
     Eigen::MatrixXd A;  ///< The state transition matrix.
     Eigen::MatrixXd Q;  ///< The process noise covariance matrix.
-    float dt{};         ///< The time step for prediction.
-    float Pq{0.01};
+    float mDt{};         ///< The time step for prediction.
+    float Pq{0.01f};
 };
 
 /**
@@ -90,9 +91,9 @@ private:
 
     Eigen::MatrixXd A;  ///< The state transition matrix.
     Eigen::MatrixXd Q;  ///< The process noise covariance matrix.
-    float dt{};
+    float mDt{};
     float w{};
-    float Pw{0.01};
+    float Pw{0.01f};
 };
 
 /**
@@ -148,7 +149,7 @@ private:
 
     Eigen::MatrixXd computationalQ(float dt);
 
-    float dt{0};           ///< The time step for prediction.
+    float mDt{0};           ///< The time step for prediction.
     Eigen::MatrixXd A;     ///< The state transition matrix.
     Eigen::MatrixXd Q;     ///< The process noise covariance matrix.
     Eigen::MatrixXd Pacc;  ///< The process noise covariance matrix.

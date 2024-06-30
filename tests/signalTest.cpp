@@ -44,8 +44,8 @@ std::shared_ptr<void> gmine;
 struct Input {
     void main_loop() {
         int i;
-        for (int i = 0; i < 10; ++i) {
-            on_input.emit(i);
+        for (size_t j = 0; j < 10; ++j) {
+            on_input.emit(j);
         }
         // while (std::cin >> i) {
         //     on_input.emit(i);

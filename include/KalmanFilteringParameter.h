@@ -2,7 +2,7 @@
  * @Author: yao.xie 1595341200@qq.com
  * @Date: 2024-03-11 14:41:36
  * @LastEditors: yao.xie 1595341200@qq.com
- * @LastEditTime: 2024-04-17 13:17:26
+ * @LastEditTime: 2024-06-30 21:36:38
  * @FilePath: /cplusplus/submodule/algorithmBase/include/KalmanFilteringParameter.h
  * @Description:
  *
@@ -27,7 +27,7 @@ public:
     Eigen::MatrixXd Q;  //状态白噪声
     Eigen::MatrixXd R;  //量测白噪声
     Eigen::MatrixXd K;  //卡尔曼滤波增益
-    void prediction(Eigen::VectorXd& X, Eigen::MatrixXd& P, float dt);
+    void prediction(Eigen::VectorXd& _X, Eigen::MatrixXd& _P, float dt);
 };
 
 class UKFKalmanFilteringParameter {
