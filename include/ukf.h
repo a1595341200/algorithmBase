@@ -2,7 +2,7 @@
  * @Author: yao.xie 1595341200@qq.com
  * @Date: 2024-03-11 10:56:53
  * @LastEditors: yao.xie 1595341200@qq.com
- * @LastEditTime: 2024-03-25 16:09:55
+ * @LastEditTime: 2024-06-30 23:00:44
  * @FilePath: /cplusplus/submodule/algorithmBase/include/ukf.h
  * @Description:
  *
@@ -54,6 +54,6 @@ private:
 
     std::unordered_map<std::string, int> model_hash_ = {{"CV", 1}, {"CTRV", 2}, {"CTRA", 3}};
     int model_{};
-    UKFKalmanFilteringParameter parameter;
+    UKFKalmanFilteringParameter parameter{};
 };
 #endif

@@ -2,7 +2,7 @@
  * @Author: yao.xie 1595341200@qq.com
  * @Date: 2024-03-11 15:07:34
  * @LastEditors: yao.xie 1595341200@qq.com
- * @LastEditTime: 2024-06-30 21:37:58
+ * @LastEditTime: 2024-06-30 22:43:01
  * @FilePath: /cplusplus/submodule/algorithmBase/src/DynamicModel.cpp
  * @Description:
  *
@@ -50,8 +50,6 @@ void CTRA::prediction(Eigen::VectorXd& X, Eigen::MatrixXd& P, float dt) {
 }
 
 CA::CA() {
-    A = Eigen::MatrixXd::Zero(6, 6);
-    Q = Eigen::MatrixXd::Zero(6, 6);
     Pacc.resize(6, 6);
     double fx = 0.01;
     double fy = 0.01;

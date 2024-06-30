@@ -2,7 +2,7 @@
  * @Author: yao.xie 1595341200@qq.com
  * @Date: 2024-03-20 22:13:55
  * @LastEditors: yao.xie 1595341200@qq.com
- * @LastEditTime: 2024-03-25 16:53:00
+ * @LastEditTime: 2024-06-30 23:13:54
  * @FilePath: /cplusplus/submodule/algorithmBase/main.cpp
  * @Description:
  *
@@ -12,19 +12,18 @@
 
 #include <fmt/color.h>
 #include <fmt/ranges.h>
-
+#include <glog/logging.h>
 #include "DataGenerator.h"
 #include "DataPlot.h"
 #include "Log.h"
-#include "dbg.h"
 
 using namespace algorithmBase;
 
 void appTest() {
-    dbg(fmt::format(fg(fmt::color::green) | fmt::emphasis::bold, "{}\n",
-                    generateNormalDistributionData(1, 1)));
+    LOG(INFO) << fmt::format(fg(fmt::color::green) | fmt::emphasis::bold, "{}\n",
+                             generateNormalDistributionData(1, 1));
     auto v = generateNormalDistributionData(1, 1, 10);
-    dbg(fmt::format(fg(fmt::color::green) | fmt::emphasis::bold, "{}\n", v));
+    LOG(INFO) << fmt::format(fg(fmt::color::green) | fmt::emphasis::bold, "{}\n", v);
     DataPlot app("DataPlot", 1920, 1080);
     app.addPlot("E_X");
     app.Run();
@@ -49,7 +48,11 @@ void generatingGaussianEquationTest() {
 }
 
 int main(int argc, char const *argv[]) {
-    // logTest();
+    logTest();
+    google::InitGoogleLogging(argv[0]);
+    FLAGS_stderrthreshold = google::INFO;
+    FLAGS_colorlogtostderr = true;
     generatingGaussianEquationTest();
+    appTest();
     return 0;
 }

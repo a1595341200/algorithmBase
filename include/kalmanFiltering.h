@@ -2,7 +2,7 @@
  * @Author: yao.xie 1595341200@qq.com
  * @Date: 2024-03-21 21:52:02
  * @LastEditors: yao.xie 1595341200@qq.com
- * @LastEditTime: 2024-03-21 21:58:21
+ * @LastEditTime: 2024-06-30 22:45:40
  * @FilePath: /cplusplus/submodule/algorithmBase/include/kalmanFiltering.h
  * @Description: 
  * 
@@ -24,15 +24,15 @@ class KalmanFilter {
   Eigen::VectorXf getState() const;
 
  public:
-  Eigen::VectorXf x;      // 状态估计值
-  Eigen::MatrixXf P;      // 状态估计误差的协方差
-  Eigen::MatrixXf Q;      // 过程噪声的方差
-  Eigen::MatrixXf R;      // 测量噪声的方差
-  Eigen::MatrixXf x_hat;  // 预测的状态估计值
-  Eigen::MatrixXf P_hat;  // 预测的状态估计误差的协方差
-  Eigen::MatrixXf K;      // 卡尔曼增益
-  Eigen::MatrixXf H;      // 观测矩阵
+  Eigen::VectorXf x{};      // 状态估计值
+  Eigen::MatrixXf P{};      // 状态估计误差的协方差
+  Eigen::MatrixXf Q{};      // 过程噪声的方差
+  Eigen::MatrixXf R{};      // 测量噪声的方差
+  Eigen::MatrixXf x_hat{};  // 预测的状态估计值
+  Eigen::MatrixXf P_hat{};  // 预测的状态估计误差的协方差
+  Eigen::MatrixXf K{};      // 卡尔曼增益
+  Eigen::MatrixXf H{};      // 观测矩阵
 
   // 状态转移矩阵
-  Eigen::MatrixXf A;
+  Eigen::MatrixXf A{};
 };

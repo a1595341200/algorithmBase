@@ -23,10 +23,23 @@ add_compile_options(
     -Wno-conversion  # 忽略隐式转换警告
     -Wsign-conversion # 警告有符号和无符号之间的隐式转换
     -Wno-unused      # 忽略未使用警告
+    -Weffc++
 )
 
 set_source_files_properties(${CMAKE_CURRENT_SOURCE_DIR}/src/pcdtool.cpp PROPERTIES
     COMPILE_FLAGS "-Wno-sign-conversion")
+
+set_source_files_properties(
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/pcdtool.cpp 
+    PROPERTIES
+    COMPILE_FLAGS "-Wno-effc++ -Wno-sign-conversion"
+)
+
+set_source_files_properties(
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/trans_forms_group.cpp 
+    PROPERTIES
+    COMPILE_FLAGS "-Wno-effc++"
+)
 
 if(CMAKE_BUILD_TYPE STREQUAL "Release")
     set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -s")
@@ -37,6 +50,8 @@ endif()
 
 add_library(${PROJECT_N} ${root_header_files} ${root_src_files})
 
+find_package(PkgConfig REQUIRED)
+pkg_check_modules(GLOG REQUIRED libglog)
 add_executable(demo main.cpp)
 
 target_link_libraries(demo 
@@ -44,6 +59,7 @@ target_link_libraries(demo
     ${PROJECT_N}
     fmt::fmt
     app::app
+    ${GLOG_LIBRARIES}
 )
 
 target_include_directories(${PROJECT_N}

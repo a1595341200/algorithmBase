@@ -2,7 +2,7 @@
  * @Author: yao.xie 1595341200@qq.com
  * @Date: 2024-03-21 21:51:52
  * @LastEditors: yao.xie 1595341200@qq.com
- * @LastEditTime: 2024-06-30 21:15:25
+ * @LastEditTime: 2024-06-30 23:08:57
  * @FilePath: /cplusplus/submodule/algorithmBase/include/DataPlot.h
  * @Description:
  *
@@ -28,9 +28,9 @@ public:
     void addData(const std::string& plotName, const std::string& subPlotName, float x, float y);
 
 private:
-    std::vector<std::string> mPlotNames;
-    std::unordered_map<std::string, std::unordered_map<std::string, std::vector<ImVec2>>> mData;
-    std::unordered_map<std::string, ImVec4> mColors;
-    std::unordered_map<std::string, bool> mCheckBoxes;
+    std::vector<std::string> mPlotNames{};
+    std::unordered_map<std::string, std::unordered_map<std::string, std::vector<ImVec2>>> mData{};
+    std::unordered_map<std::string, ImVec4> mColors{};
+    std::unordered_map<std::string, bool> mCheckBoxes{};
 };
 }  // namespace algorithmBase

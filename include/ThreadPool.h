@@ -2,7 +2,7 @@
  * @Author: yao.xie 1595341200@qq.com
  * @Date: 2023-08-01 09:39:40
  * @LastEditors: yao.xie 1595341200@qq.com
- * @LastEditTime: 2024-05-20 16:49:26
+ * @LastEditTime: 2024-06-30 22:41:37
  * @FilePath: /cplusplus/submodule/algorithmBase/include/ThreadPool.h
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置
  * 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
@@ -53,12 +53,12 @@ public:
   void init();
 
 private:
-  std::vector<std::thread> mThreads;
-  std::queue<Task> mTasks;
-  std::mutex mLock;
-  std::condition_variable mCv;
+  std::vector<std::thread> mThreads{};
+  std::queue<Task> mTasks{};
+  std::mutex mLock{};
+  std::condition_variable mCv{};
   std::atomic_bool isStop{false};
-  size_t mSize;
+  size_t mSize{};
 };
 
 #endif /* THREADPOOL_H */
