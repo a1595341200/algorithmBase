@@ -2,7 +2,7 @@
  * @Author: yao.xie 1595341200@qq.com
  * @Date: 2024-03-11 15:07:34
  * @LastEditors: yao.xie 1595341200@qq.com
- * @LastEditTime: 2024-06-30 22:43:01
+ * @LastEditTime: 2024-07-01 21:16:31
  * @FilePath: /cplusplus/submodule/algorithmBase/src/DynamicModel.cpp
  * @Description:
  *
@@ -15,14 +15,15 @@
 #include <cmath>
 
 void CTRA::prediction(Eigen::VectorXd& X, Eigen::MatrixXd& P, float dt) {
+    (void)P;
     assert(X.size() != 6);
     float px_k(0.0), py_k(0.0), velo_k(0.0), yaw_k(0.0), yawd_k(0.0), a_k(0.0);
-    px_k = X(0);
-    py_k = X(1);
-    velo_k = X(2);
-    yaw_k = X(3);
-    yawd_k = X(4);
-    a_k = X(5);
+    px_k = static_cast<float>(X(0));
+    py_k = static_cast<float>(X(1));
+    velo_k = static_cast<float>(X(2));
+    yaw_k = static_cast<float>(X(3));
+    yawd_k = static_cast<float>(X(4));
+    a_k = static_cast<float>(X(5));
 
     if (fabs(yawd_k) > 0.001) {
         px_k += ((velo_k * yawd_k + a_k * yawd_k * dt) * std::sin(yaw_k + yawd_k * dt) +
@@ -34,8 +35,8 @@ void CTRA::prediction(Eigen::VectorXd& X, Eigen::MatrixXd& P, float dt) {
                  a_k * std::sin(yaw_k)) /
                 (yawd_k * yawd_k);
     } else {
-        px_k += (velo_k * dt + 0.5 * a_k * dt * dt) * cos(yaw_k);
-        py_k += (velo_k * dt + 0.5 * a_k * dt * dt) * sin(yaw_k);
+        px_k += (velo_k * dt + 0.5f * a_k * dt * dt) * static_cast<float>(cos(yaw_k));
+        py_k += (velo_k * dt + 0.5f * a_k * dt * dt) * static_cast<float>(sin(yaw_k));
     }
 
     velo_k += a_k * dt;
@@ -146,7 +147,7 @@ CT::CT() {
 }
 
 void CT::prediction(Eigen::VectorXd& X, Eigen::MatrixXd& P, float dt) {
-    w = X(4);
+    w = static_cast<float>(X(4));
     computationalA(dt);
     computationalQ(dt);
     X.head(4) = A * X.head(4);

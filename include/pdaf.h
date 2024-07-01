@@ -2,7 +2,7 @@
  * @Author: yao.xie 1595341200@qq.com
  * @Date: 2024-03-23 21:35:41
  * @LastEditors: yao.xie 1595341200@qq.com
- * @LastEditTime: 2024-06-30 22:46:44
+ * @LastEditTime: 2024-07-01 20:59:57
  * @FilePath: /cplusplus/submodule/algorithmBase/include/pdaf.h
  * @Description:
  *
@@ -62,8 +62,8 @@ public:
     std::vector<float> Bi{};
     Eigen::Matrix2f Pc{};  // cov matrix of the stated update with the correct measurement
     Eigen::Matrix2f Ps{};  // spread of innovations
-    float Pd{0.35};  // 目标的检测概率, 有传感器性能决定, 是一个已知值
-    float Pg{0.9999};  // 目标的检测概率, 有传感器性能决定, 是一个已知值
+    float Pd{0.35f};  // 目标的检测概率, 有传感器性能决定, 是一个已知值
+    float Pg{0.9999f};  // 目标的检测概率, 有传感器性能决定, 是一个已知值
 };
 
 }  // namespace algorithmBase

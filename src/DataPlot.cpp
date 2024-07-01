@@ -2,7 +2,7 @@
  * @Author: yao.xie 1595341200@qq.com
  * @Date: 2024-03-22 15:58:59
  * @LastEditors: yao.xie 1595341200@qq.com
- * @LastEditTime: 2024-06-30 21:20:34
+ * @LastEditTime: 2024-07-01 20:52:18
  * @FilePath: /cplusplus/submodule/algorithmBase/src/DataPlot.cpp
  * @Description:
  *
@@ -25,8 +25,8 @@ void DataPlot::Update() {
             ImPlot::SetupAxes("x", "y");
             ImPlot::SetNextLineStyle(mColors[plotName], 2.0);
             for (auto& [subPlotName, data] : mData[plotName]) {
-                ImPlot::PlotLine(subPlotName.c_str(), &data[0].x, &data[0].y, (int)data.size(), 0,
-                                 0, 2 * sizeof(float));
+                ImPlot::PlotLine(subPlotName.c_str(), &data[0].x, &data[0].y,
+                                 static_cast<int>(data.size()), 0, 0, 2 * sizeof(float));
             }
             ImPlot::EndPlot();
         }

@@ -2,7 +2,7 @@
  * @Author: yao.xie 1595341200@qq.com
  * @Date: 2024-03-20 22:13:55
  * @LastEditors: yao.xie 1595341200@qq.com
- * @LastEditTime: 2024-06-30 23:13:54
+ * @LastEditTime: 2024-07-01 21:13:06
  * @FilePath: /cplusplus/submodule/algorithmBase/main.cpp
  * @Description:
  *
@@ -19,7 +19,7 @@
 
 using namespace algorithmBase;
 
-void appTest() {
+static void appTest() {
     LOG(INFO) << fmt::format(fg(fmt::color::green) | fmt::emphasis::bold, "{}\n",
                              generateNormalDistributionData(1, 1));
     auto v = generateNormalDistributionData(1, 1, 10);
@@ -29,11 +29,11 @@ void appTest() {
     app.Run();
 }
 
-void logTest() {
+static void logTest() {
     LOG_INFO("Hello, World!", 1, 2, 3);
 }
 
-void generatingGaussianEquationTest() {
+static void generatingGaussianEquationTest() {
     auto res = generatingGaussianEquation(0, 2);
     DataPlot app("DataPlot", 1920, 1080);
     app.addPlot("Gaussian");
@@ -48,6 +48,7 @@ void generatingGaussianEquationTest() {
 }
 
 int main(int argc, char const *argv[]) {
+    (void)argc;
     logTest();
     google::InitGoogleLogging(argv[0]);
     FLAGS_stderrthreshold = google::INFO;

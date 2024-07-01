@@ -1,14 +1,14 @@
 #include "ukf.h"
 
-float polarAngleCal(float x, float y) {
-    float PI = 3.1415926;
+[[maybe_unused]] static float polarAngleCal(float x, float y) {
+    float PI = 3.1415926f;
     float temp_tangle = 0;
     if (x == 0 && y == 0) {
         temp_tangle = 0;
     } else if (y >= 0) {
-        temp_tangle = (float)atan2(y, x);
+        temp_tangle = static_cast<float>(atan2(y, x));
     } else if (y <= 0) {
-        temp_tangle = (float)atan2(y, x) + 2 * PI;
+        temp_tangle = static_cast<float>(atan2(y, x)) + 2.0f * PI;
     }
     return temp_tangle;
 }
@@ -23,16 +23,16 @@ float polarAngleCal(float x, float y) {
         std::cout<<"noramel###########END "<<angle<<std::endl;
         return angle;
 }*/
-float normalangle(float angle) {
-    const auto times =
-        std::round(std::fabs(angle / (2. * M_PI)));  // for the case when angle is very very large
+static float normalangle(float angle) {
+    const auto times = static_cast<float>(
+        std::round(std::abs(angle / (2.0f * M_PI))));  // for the case when angle is very very large
 
     if (angle > M_PI) {
-        angle -= times * 2.0 * M_PI;
+        angle -= static_cast<float>(times * 2.0f * M_PI);
     }
 
     if (angle < -M_PI) {
-        angle += times * 2.0 * M_PI;
+        angle += static_cast<float>(times * 2.0f * M_PI);
     }
     return angle;
 }
@@ -73,15 +73,15 @@ void UKF::initialization(Eigen::VectorXd& X, Eigen::MatrixXd& P, float time) {
 
     pretime = time;
 
-    parameter.lamda = 3 - parameter.kfp.stateDimension;
+    parameter.lamda = 3.0f - static_cast<float>(parameter.kfp.stateDimension);
 
     //权重
     parameter.wm = Eigen::VectorXd(2 * parameter.kfp.stateDimension + 1);
     parameter.wc = Eigen::VectorXd(2 * parameter.kfp.stateDimension + 1);
-    parameter.wm(0) = (parameter.lamda / (parameter.lamda + parameter.kfp.stateDimension));
-    parameter.wc(0) = (parameter.lamda / (parameter.lamda + parameter.kfp.stateDimension)) + 1 -
+    parameter.wm(0) = (parameter.lamda / (parameter.lamda + static_cast<float>(parameter.kfp.stateDimension)));
+    parameter.wc(0) = (parameter.lamda / (parameter.lamda + static_cast<float>(parameter.kfp.stateDimension))) + 1 -
                       std::pow(parameter.alpha, 2) + parameter.beta;
-    float w = 0.5 / (parameter.lamda + parameter.kfp.stateDimension);
+    float w = 0.5f / (parameter.lamda + static_cast<float>(parameter.kfp.stateDimension));
     for (int i = 1; i < 2 * parameter.kfp.stateDimension + 1; ++i) {
         parameter.wm(i) = (w);
         parameter.wc(i) = (w);
@@ -105,7 +105,7 @@ void UKF::makeSigmaPoints() {
     // std::cout<<"MakeSigmaPoints\n"<<L<<std::endl;
 
     parameter.sigmaPoints.col(0) = X;
-    const float c = std::sqrt(parameter.lamda + parameter.kfp.stateDimension);
+    const float c = std::sqrt(parameter.lamda + static_cast<float>(parameter.kfp.stateDimension));
 
     for (int i = 0; i < parameter.kfp.stateDimension; ++i) {
         parameter.sigmaPoints.col(i + 1) = X + c * L.col(i);
@@ -128,19 +128,19 @@ void UKF::prediction(float ntime) {
 
     for (int i = 0; i < 2 * parameter.kfp.stateDimension + 1; ++i) {
         float px_k(0.0), py_k(0.0), velo_k(0.0), yaw_k(0.0), yawd_k(0.0), a_k(0.0);
-        px_k = parameter.sigmaPoints(0, i);
-        py_k = parameter.sigmaPoints(1, i);
-        velo_k = parameter.sigmaPoints(2, i);
-        yaw_k = parameter.sigmaPoints(3, i);
+        px_k = static_cast<float>(parameter.sigmaPoints(0, i));
+        py_k = static_cast<float>(parameter.sigmaPoints(1, i));
+        velo_k = static_cast<float>(parameter.sigmaPoints(2, i));
+        yaw_k = static_cast<float>(parameter.sigmaPoints(3, i));
         if (parameter.kfp.stateDimension == 5)
-            yawd_k = parameter.sigmaPoints(4, i);
+            yawd_k = static_cast<float>(parameter.sigmaPoints(4, i));
         if (parameter.kfp.stateDimension == 6) {
-            yawd_k = parameter.sigmaPoints(4, i);
-            a_k = parameter.sigmaPoints(5, i);
+            yawd_k = static_cast<float>(parameter.sigmaPoints(4, i));
+            a_k = static_cast<float>(parameter.sigmaPoints(5, i));
         }
 
         if (model_ == 1) {  // CV
-            float px_pre{}, py_pre{}, velo_pre{}, yaw_pre{}, yawd_pre{}, a_pre{};
+            float px_pre{}, py_pre{}, velo_pre{}, yaw_pre{};
             px_pre = px_pre + velo_k * deltat * cos(yaw_k);
             py_pre = py_k + velo_k * deltat * sin(yaw_k);
 
@@ -155,7 +155,7 @@ void UKF::prediction(float ntime) {
             parameter.sigmaPointsPre(5, i) = a_k;
 
         } else if (model_ == 2) {  // CTRV
-            float px_pre{}, py_pre{}, velo_pre{}, yaw_pre{}, yawd_pre{}, a_pre{};
+            float px_pre{}, py_pre{}, velo_pre{}, yaw_pre{}, yawd_pre{};
             if (fabs(yawd_k) > 0.001) {
                 px_pre = px_pre +
                          velo_k / yawd_k * (std::sin(yaw_k + yawd_k * deltat) - std::sin(yaw_k));
@@ -293,7 +293,6 @@ void UKF::update(Eigen::VectorXd& Z) {
     parameter.kfp.X(3) = normalangle(parameter.kfp.X(3));  //,parameter.kfp.X(2));
     parameter.kfp.X += K * parameter.zminus;
     parameter.kfp.P -= K * parameter.S * K.transpose();
-
 }
 
 Eigen::VectorXd UKF::getState() {

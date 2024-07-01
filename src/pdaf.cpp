@@ -6,10 +6,10 @@ namespace algorithmBase {
 pdaf::pdaf() {
     X << 1, 1;
     A = Eigen::Matrix2f::Identity();
-    Q << 0.1, 0, 0, 0.1;
-    R << 0.1, 0, 0, 0.1;
+    Q << 0.1f, 0, 0, 0.1f;
+    R << 0.1f, 0, 0, 0.1f;
     K = Eigen::Matrix2f::Zero();
-    P << 0.01, 0, 0, 0.01;
+    P << 0.01f, 0, 0, 0.01f;
     H = Eigen::Matrix2f::Identity();
 }
 
@@ -20,7 +20,7 @@ void pdaf::prediction(float dt) {
 }
 float pdaf::validationGateVolume() {
     // returns the validation gate volume of Sk
-    return (3.1415925 * std::sqrt(abs((18.4 * S).determinant())));
+    return (3.1415925f * std::sqrt(std::abs((18.4f * S).determinant())));
 }
 
 void pdaf::update(const std::vector<Eigen::Vector2f>& mess) {
@@ -38,6 +38,7 @@ void pdaf::update(const std::vector<Eigen::Vector2f>& mess) {
 }
 
 void pdaf::statePrediction(float dt) {
+    (void)dt;
     X = A * X;
     // log(std::cout, "X \n", X);
 }
@@ -68,10 +69,10 @@ void pdaf::kalmanGain() {
 }
 void pdaf::equivalentInnovation(const std::vector<Eigen::Vector2f>& mess) {
     Eigen::Vector2f sum(0.0f, 0.0f);
-    Bi[0] = calculateBi(mess, 0);
+    Bi[0] = static_cast<float>(calculateBi(mess, 0));
     LOG_INFO("start");
     for (size_t i = 0; i < mess.size(); i++) {
-        Bi[i + 1] = calculateBi(mess, i + 1);
+        Bi[i + 1] = static_cast<float>(calculateBi(mess, i + 1));
         sum += Bi[i + 1] * V[i + 1];
         LOG_INFO("Bi[", i + 1, "]=", Bi[i + 1] * V[i + 1]);
     }
@@ -109,11 +110,11 @@ double pdaf::calculateLi(const std::vector<Eigen::Vector2f>& mess, size_t index)
     double NZi;
     double ret;
 
-    lambda = mess.size() / validationGateVolume();
+    lambda = static_cast<float>(mess.size()) / validationGateVolume();
     ViZi = V[index].transpose() * S.inverse() * V[index];
 
     eViZi = std::exp(-0.5 * ViZi);
-    NZi = eViZi / (std::pow((2 * 3.1415926), (2 / 2)) * sqrt(abs(S.determinant())));
+    NZi = eViZi / (std::pow((2 * 3.1415926), (2 / 2)) * sqrt(std::abs(S.determinant())));
     ret = NZi * Pd / lambda;
     /*
             cout << "Zk=" << Zk.Z[i] << " pZk=" << pZk << endl;
@@ -148,11 +149,11 @@ void pdaf::stateUpdate() {
 void pdaf::errorCovUpdate(const std::vector<Eigen::Vector2f>& mess) {
     float B0;
     Eigen::Matrix2f sum = Eigen::Matrix2f::Zero();
-    B0 = calculateBi(mess, 0);
+    B0 = static_cast<float>(calculateBi(mess, 0));
     Pc = P - K * S * K.transpose();
     LOG_INFO("begin Ps calculation");
     for (size_t i = 0; i < mess.size(); i++) {
-        Bi[i + 1] = calculateBi(mess, i + 1);
+        Bi[i + 1] = static_cast<float>(calculateBi(mess, i + 1));
         LOG_INFO("Bi[", i + 1, "]=", Bi[i + 1]);
 
         sum += Bi[i + 1] * V[i + 1] * V[i + 1].transpose();

@@ -2,7 +2,7 @@
  * @Author: yao.xie 1595341200@qq.com
  * @Date: 2024-04-12 13:24:14
  * @LastEditors: yao.xie 1595341200@qq.com
- * @LastEditTime: 2024-04-15 17:04:43
+ * @LastEditTime: 2024-07-01 22:30:49
  * @FilePath: /cplusplus/submodule/algorithmBase/src/CovarianceIntersection.cpp
  * @Description:
  *
@@ -35,20 +35,21 @@ void CovarianceIntersection::update(const Eigen::VectorXf& z) {
 
 CovarianceIntersection::CovarianceIntersection() {
     A.resize(2, 2);
-    A << 1, 0, 0, 1;
+    A << 1.0f, 0, 0, 1.0f;
     X.resize(2);
-    X << 1, 1;
+    X << 1.0f, 1.0f;
     Q.resize(2, 2);
-    Q << 0.01, 0.0001, 0.0002, 0.01;
+    Q << 0.01f, 0.0001f, 0.0002f, 0.01f;
     R.resize(2, 2);
-    R << 0.1, -0.1, -0.12, 0.1;
+    R << 0.1f, -0.1f, -0.12f, 0.1f;
     P.resize(2, 2);
-    P << 0.05, 0.0001, 0.0002, 0.05;
+    P << 0.05f, 0.0001f, 0.0002f, 0.05f;
     H.resize(2);
-    H << 1, 1;
+    H << 1.0f, 1.0f;
 }
 
 void CovarianceIntersection::prediction(double dt) {
+    (void)dt;
     X = A * X;
     P = A * P * A.transpose() + Q;
 }
