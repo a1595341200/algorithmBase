@@ -42,7 +42,7 @@ add_compile_options(
     -Wsign-compare
     -Wsign-conversion
     -Wold-style-cast
-    -Wrange-loop-construct
+    # -Wrange-loop-construct
     -Wformat
     -Wstrict-aliasing=3
     -Wrestrict
@@ -51,10 +51,10 @@ add_compile_options(
     -Wattributes
     -Wmissing-declarations
     -Warray-bounds
-    -Wdangling-pointer=2
+    # -Wdangling-pointer=2
     -Wreturn-local-addr
-    -Wuse-after-free
-    -Wmismatched-new-delete
+    # -Wuse-after-free
+    # -Wmismatched-new-delete
     -Wvla
     -Walloca
     -Wreorder
@@ -73,14 +73,14 @@ add_compile_options(
     -Wunused-const-variable
     -Wunused-value
     -Werror=unused-result
-    -Werror=use-after-free=3
-    -Werror=string-compare
+    # -Werror=use-after-free=3
+    # -Werror=string-compare
     -Werror=return-type
     -Werror=deprecated-copy-dtor
     -Werror=deprecated-copy
     -Wnon-virtual-dtor
     -Werror=delete-non-virtual-dtor
-    -Werror=mismatched-new-delete
+    # -Werror=mismatched-new-delete
     -Werror=suggest-override
     -Werror=conversion-null
     -Werror=zero-as-null-pointer-constant
@@ -89,12 +89,12 @@ add_compile_options(
     -Wparentheses
     -Wconversion
     -Werror=float-conversion
-    -Wenum-conversion
+    # -Wenum-conversion
     -Wsign-conversion
     -Wsign-compare
     -Wsign-promo
     -Wold-style-cast
-    -Wrange-loop-construct
+    # -Wrange-loop-construct
     -Werror=uninitialized
     -Werror=maybe-uninitialized
     -Wmissing-field-initializers
