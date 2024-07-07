@@ -2,7 +2,7 @@
  * @Author: yao.xie 1595341200@qq.com
  * @Date: 2024-03-20 21:53:49
  * @LastEditors: yao.xie 1595341200@qq.com
- * @LastEditTime: 2024-06-30 21:44:38
+ * @LastEditTime: 2024-07-08 00:04:17
  * @FilePath: /cplusplus/submodule/algorithmBase/include/DataGenerator.h
  * @Description:
  *
@@ -10,6 +10,7 @@
  */
 #pragma once
 #include <algorithm>
+#include <armadillo>
 #include <cmath>
 #include <iomanip>
 #include <random>
@@ -51,6 +52,21 @@ std::pair<std::vector<T>, std::vector<T>> generatingGaussianEquation(double mean
     }
 
     return res;
+}
+
+template <typename T>
+inline void create_gaussian_particles(std::vector<T>& particles, const arma::vec& mean,
+                                      const arma::mat& cov, size_t n) {
+    // 生成多维正态分布的随机样本
+    arma::mat samples = arma::randn(n, mean.size());   // 标准正态分布
+    arma::mat result = arma::chol(cov) * samples.t();  // 转换为特定均值和协方差
+    particles.clear();
+    particles.resize(n, T());
+    for (size_t i = 0; i < n; ++i) {
+        for (size_t j = 0; j < mean.size(); ++j) {
+            particles[i][j] = result.unsafe_col(i)(j);
+        }
+    }
 }
 
 }  // namespace algorithmBase

@@ -13,6 +13,8 @@ set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/out)
 set(CMAKE_INSTALL_PREFIX ${CMAKE_BINARY_DIR}/../../build_install)
 find_package(fmt REQUIRED)
 find_package(app REQUIRED)
+find_package(Armadillo REQUIRED)
+
 file(GLOB root_header_files "${CMAKE_CURRENT_SOURCE_DIR}/include/*.h" "${CMAKE_CURRENT_SOURCE_DIR}/include/*.hpp")
 file(GLOB root_src_files "${CMAKE_CURRENT_SOURCE_DIR}/src/*.cpp")
 
@@ -65,6 +67,7 @@ target_link_libraries(demo
 target_include_directories(${PROJECT_N}
     PUBLIC
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+    $<BUILD_INTERFACE:${ARMADILLO_INCLUDE_DIRS}>
     $<INSTALL_INTERFACE:include/${PROJECT_N}>
 )
 
@@ -73,6 +76,7 @@ target_link_libraries(${PROJECT_N}
     fmt::fmt
     app::app
     pthread
+    ${ARMADILLO_LIBRARIES}
 )
 
 option(BUILD_TESTS "Build Tests" OFF)

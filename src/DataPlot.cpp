@@ -2,7 +2,7 @@
  * @Author: yao.xie 1595341200@qq.com
  * @Date: 2024-03-22 15:58:59
  * @LastEditors: yao.xie 1595341200@qq.com
- * @LastEditTime: 2024-07-01 20:52:18
+ * @LastEditTime: 2024-07-07 23:47:16
  * @FilePath: /cplusplus/submodule/algorithmBase/src/DataPlot.cpp
  * @Description:
  *
@@ -17,16 +17,37 @@ void DataPlot::Update() {
         ImGui::SameLine();
         ImGui::Checkbox(plotName.c_str(), &mCheckBoxes[plotName]);
     }
+
+    float window_height = ImGui::GetContentRegionAvail().y;
+    size_t count{};
     for (auto& plotName : mPlotNames) {
         if (!mCheckBoxes[plotName]) {
             continue;
         }
-        if (ImPlot::BeginPlot(plotName.c_str())) {
+        count++;
+    }
+
+    for (auto& plotName : mPlotNames) {
+        if (!mCheckBoxes[plotName]) {
+            continue;
+        }
+        if (ImPlot::BeginPlot(plotName.c_str(),
+                              ImVec2(-1, window_height / static_cast<float>(count)))) {
             ImPlot::SetupAxes("x", "y");
             ImPlot::SetNextLineStyle(mColors[plotName], 2.0);
             for (auto& [subPlotName, data] : mData[plotName]) {
-                ImPlot::PlotLine(subPlotName.c_str(), &data[0].x, &data[0].y,
-                                 static_cast<int>(data.size()), 0, 0, 2 * sizeof(float));
+                switch (mPlotType) {
+                    case PlotType::LINE:
+                        ImPlot::PlotLine(subPlotName.c_str(), &data[0].x, &data[0].y,
+                                         static_cast<int>(data.size()), 0, 0, 2 * sizeof(float));
+                        break;
+                    case PlotType::SCATTER:
+                        ImPlot::PlotScatter(subPlotName.c_str(), &data[0].x, &data[0].y,
+                                            static_cast<int>(data.size()), 0, 0, 2 * sizeof(float));
+                        break;
+                    default:
+                        break;
+                };
             }
             ImPlot::EndPlot();
         }
