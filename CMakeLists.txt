@@ -10,7 +10,7 @@ add_compilation_options_check()
 
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/out)
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/out)
-set(CMAKE_INSTALL_PREFIX ${CMAKE_BINARY_DIR}/../../build_install)
+# set(CMAKE_INSTALL_PREFIX ${CMAKE_BINARY_DIR}/../../build_install)
 find_package(fmt REQUIRED)
 find_package(app REQUIRED)
 find_package(Armadillo REQUIRED)
