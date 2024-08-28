@@ -2,7 +2,7 @@
  * @Author: yao.xie 1595341200@qq.com
  * @Date: 2024-03-11 15:04:28
  * @LastEditors: yao.xie 1595341200@qq.com
- * @LastEditTime: 2024-06-30 23:00:24
+ * @LastEditTime: 2024-08-28 16:13:36
  * @FilePath: /cplusplus/submodule/algorithmBase/include/DynamicModel.h
  * @Description:
  *
@@ -144,16 +144,17 @@ public:
     void update(Eigen::VectorXd& X, Eigen::MatrixXd& P, const Eigen::VectorXd& Z,
                 const Eigen::MatrixXd& R) override;
 
+    Eigen::MatrixXd A{Eigen::MatrixXd::Zero(6, 6)};     ///< The state transition matrix.
+    Eigen::MatrixXd Q{Eigen::MatrixXd::Zero(6, 6)};     ///< The process noise covariance matrix.
+    Eigen::MatrixXd Pacc{};  ///< The process noise covariance matrix.
+    Eigen::MatrixXd H{};
+
 private:
     Eigen::MatrixXd computationalA(float dt);
 
     Eigen::MatrixXd computationalQ(float dt);
 
     float mDt{0};           ///< The time step for prediction.
-    Eigen::MatrixXd A{Eigen::MatrixXd::Zero(6, 6)};     ///< The state transition matrix.
-    Eigen::MatrixXd Q{Eigen::MatrixXd::Zero(6, 6)};     ///< The process noise covariance matrix.
-    Eigen::MatrixXd Pacc{};  ///< The process noise covariance matrix.
-    Eigen::MatrixXd H{};
 };
 
 #endif /* DYNAMICMODEL_H */
