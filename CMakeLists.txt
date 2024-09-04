@@ -76,6 +76,7 @@ target_include_directories(${PROJECT_N}
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
     $<BUILD_INTERFACE:${ARMADILLO_INCLUDE_DIRS}>
     $<INSTALL_INTERFACE:include/${PROJECT_N}>
+    $<INSTALL_INTERFACE:include>
 )
 
 target_link_libraries(${PROJECT_N} 
