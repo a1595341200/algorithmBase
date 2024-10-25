@@ -34,6 +34,8 @@ public:
     }
     void addData(const std::string& plotName, const std::string& subPlotName, float x, float y);
 
+    void clear(const std::string& plotName);
+
 private:
     std::vector<std::string> mPlotNames{};
     std::unordered_map<std::string, std::unordered_map<std::string, std::vector<ImVec2>>> mData{};
