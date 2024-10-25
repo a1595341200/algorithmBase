@@ -82,4 +82,11 @@ void DataPlot::addData(const std::string& plotName, const std::string& subPlotNa
     }
     mData[plotName][subPlotName].push_back(ImVec2(x, y));
 }
+
+void DataPlot::clear(const std::string& plotName) {
+    if (mData.count(plotName)) {
+        mData.erase(plotName);
+    }
+}
+
 }  // namespace algorithmBase
