@@ -91,7 +91,8 @@ target_link_libraries(${PROJECT_N}
     ${Protobuf_LIBRARIES}
 )
 
-option(BUILD_TESTS "Build Tests" OFF)
+option(BUILD_TESTS "Build Tests" ON)
+
 if(BUILD_TESTS)
     include(CTest)
     enable_testing()

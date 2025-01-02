@@ -12,7 +12,7 @@ enum class CallbackResult {
     Erase,
 };
 
-constexpr struct oneshot_t { explicit oneshot_t() = default; } oneshot;
+constexpr struct oneshot_t { explicit oneshot_t() = default; } oneshot{};
 
 enum class nshot_t : size_t {};
 
@@ -87,7 +87,7 @@ private:
     using Functor = std::function<CallbackResult(T...)>;  // use T
 #endif
 
-    std::vector<Functor> m_callbacks;
+    std::vector<Functor> m_callbacks{};
 
 public:
 #if __cpp_if_constexpr

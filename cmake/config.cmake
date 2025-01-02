@@ -49,7 +49,7 @@ add_compile_options(
     -Winvalid-memory-model
     -Wsuggest-override
     -Wattributes
-    -Wmissing-declarations
+    # -Wmissing-declarations
     -Warray-bounds
     # -Wdangling-pointer=2
     -Wreturn-local-addr
@@ -98,7 +98,7 @@ add_compile_options(
     -Werror=uninitialized
     -Werror=maybe-uninitialized
     -Wmissing-field-initializers
-    -Wmissing-declarations
+    # -Wmissing-declarations
     -Wempty-body
     -Wlogical-op
     -Wlogical-not-parentheses

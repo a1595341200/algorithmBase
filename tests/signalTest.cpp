@@ -2,7 +2,7 @@
  * @Author: yao.xie 1595341200@qq.com
  * @Date: 2024-06-26 22:20:43
  * @LastEditors: yao.xie 1595341200@qq.com
- * @LastEditTime: 2024-06-26 22:47:10
+ * @LastEditTime: 2025-01-02 16:10:01
  * @FilePath: /cplusplus/submodule/algorithmBase/tests/signalTest.cpp
  * @Description:
  *
@@ -43,8 +43,8 @@ std::shared_ptr<void> gmine;
 
 struct Input {
     void main_loop() {
-        int i;
-        for (size_t j = 0; j < 10; ++j) {
+        // int i;
+        for (int j = 0; j < 10; ++j) {
             on_input.emit(j);
         }
         // while (std::cin >> i) {
@@ -57,8 +57,8 @@ struct Input {
         on_exit.emit("hello", "world");
     }
 
-    pengsig::Signal<int> on_input;
-    pengsig::Signal<std::string, std::string> on_exit;
+    pengsig::Signal<int> on_input{};
+    pengsig::Signal<std::string, std::string> on_exit{};
 };
 
 void test(std::string msg1, std::string msg2) {
