@@ -2,7 +2,7 @@
  * @Author: yao.xie 1595341200@qq.com
  * @Date: 2024-03-21 21:51:52
  * @LastEditors: yao.xie 1595341200@qq.com
- * @LastEditTime: 2025-01-15 16:17:17
+ * @LastEditTime: 2025-01-15 18:22:13
  * @FilePath: /cplusplus/submodule/algorithmBase/include/DataPlot.h
  * @Description:
  *
@@ -20,6 +20,16 @@ enum class PlotType {
     SCATTER,
 };
 
+class BevObject {
+public:
+    float x;
+    float y;
+    float half_length;
+    float half_width;
+    float angle;
+    uint8_t nearest_side;
+};
+
 class DataPlot : public App {
 public:
     using App::App;
@@ -29,7 +39,7 @@ public:
     }
     void addPlot(const std::string& plotName);
     void addPlot(const std::string& plotName, const std::string& subPlotName);
-    
+
     // 添加设置线段类型和粗细的方法
     void setLineType(const std::string& plotName, ImPlotLineFlags type) {
         mLineTypes[plotName] = type;
@@ -46,16 +56,28 @@ public:
 
     void clear(const std::string& plotName);
 
+    void plotObj(float x, float y, float half_length, float half_width, float angle,
+                 uint8_t nearest_side, const ImVec4& col, const std::string& id);
+    void plotLine();
+
+    void plotBev();
+
+    void addBevData(float x, float y, float half_length, float half_width, float angle,
+                    uint8_t nearest_side);
+
 private:
+    void plotSelf();
+
     std::vector<std::string> mPlotNames{};
     std::unordered_map<std::string, std::unordered_map<std::string, std::vector<ImVec2>>> mData{};
     std::unordered_map<std::string, ImVec4> mColors{};
     std::unordered_map<std::string, bool> mCheckBoxes{};
-    
+
     // 添加存储线段类型和粗细的成员变量
     std::unordered_map<std::string, ImPlotLineFlags> mLineTypes{};
     std::unordered_map<std::string, float> mLineThicknesses{};
-    
+
     PlotType mPlotType{PlotType::LINE};
+    std::vector<BevObject> mBevData{};
 };
 }  // namespace algorithmBase
