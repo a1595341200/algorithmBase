@@ -2,7 +2,7 @@
  * @Author: yao.xie 1595341200@qq.com
  * @Date: 2024-03-22 15:58:59
  * @LastEditors: yao.xie 1595341200@qq.com
- * @LastEditTime: 2024-07-07 23:47:16
+ * @LastEditTime: 2025-01-15 16:24:49
  * @FilePath: /cplusplus/submodule/algorithmBase/src/DataPlot.cpp
  * @Description:
  *
@@ -34,12 +34,18 @@ void DataPlot::Update() {
         if (ImPlot::BeginPlot(plotName.c_str(),
                               ImVec2(-1, window_height / static_cast<float>(count)))) {
             ImPlot::SetupAxes("x", "y");
-            ImPlot::SetNextLineStyle(mColors[plotName], 2.0);
+
+            float thickness = mLineThicknesses.count(plotName) ? mLineThicknesses[plotName] : 2.0f;
+
+            ImPlot::SetNextLineStyle(mColors[plotName], thickness);
+
             for (auto& [subPlotName, data] : mData[plotName]) {
                 switch (mPlotType) {
                     case PlotType::LINE:
+                        ImPlot::SetNextMarkerStyle(ImPlotMarker_Asterisk);
                         ImPlot::PlotLine(subPlotName.c_str(), &data[0].x, &data[0].y,
-                                         static_cast<int>(data.size()), 0, 0, 2 * sizeof(float));
+                                         static_cast<int>(data.size()), mLineTypes[plotName], 0,
+                                         2 * sizeof(float));
                         break;
                     case PlotType::SCATTER:
                         ImPlot::PlotScatter(subPlotName.c_str(), &data[0].x, &data[0].y,
@@ -66,6 +72,8 @@ void DataPlot::addPlot(const std::string& plotName, const std::string& subPlotNa
     }
     mCheckBoxes[plotName] = false;
     mColors[plotName] = RandomColor();
+    mLineTypes[plotName] = ImPlotLineFlags_::ImPlotLineFlags_None;
+    mLineThicknesses[plotName] = 2.0f;
 }
 
 void DataPlot::addData(const std::string& plotName, const std::string& subPlotName, float x,
