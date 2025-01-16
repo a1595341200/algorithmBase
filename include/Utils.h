@@ -2,7 +2,7 @@
  * @Author: yao.xie 1595341200@qq.com
  * @Date: 2024-06-12 14:33:29
  * @LastEditors: yao.xie 1595341200@qq.com
- * @LastEditTime: 2024-06-21 11:49:00
+ * @LastEditTime: 2025-01-16 17:41:55
  * @FilePath: /cplusplus/submodule/algorithmBase/include/Utils.h
  * @Description:
  *
@@ -11,7 +11,10 @@
 #pragma once
 #include <vector>
 
+#include <boost/type_index.hpp>
 #include <eigen3/Eigen/Dense>
+
+#include "spd_log_helper.h"
 
 /**
  * @namespace algorithmBase
@@ -20,7 +23,7 @@
 namespace algorithmBase {
 /**
  * @brief 结构体 ObjectAttribute 表示物体的属性。
- * 
+ *
  * 该结构体包含物体的宽度、长度和朝向。
  */
 struct ObjectAttribute {
@@ -69,5 +72,17 @@ std::vector<Eigen::Vector2f> calculateCornerPointsByCenterPoint(
 std::vector<Eigen::Vector2f> nearestSideToNearestPoint(double x, double y, double half_length,
                                                        double half_width, double angle,
                                                        uint8_t nearest_side);
+template <typename T>
+void lookType(T&& param) {
+    using boost::typeindex::type_id_with_cvr;
+    LOG_INFO("T={}", type_id_with_cvr<T>().pretty_name());
+    LOG_INFO("param={}", type_id_with_cvr<decltype(param)>().pretty_name());
+}
+
+template <typename T>
+void lookType() {
+    using boost::typeindex::type_id_with_cvr;
+    LOG_INFO("T={}", type_id_with_cvr<T>().pretty_name());
+}
 
 }  // namespace algorithmBase
