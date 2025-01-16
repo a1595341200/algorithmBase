@@ -2,14 +2,15 @@
  * @Author: yao.xie 1595341200@qq.com
  * @Date: 2024-08-27 16:54:38
  * @LastEditors: yao.xie 1595341200@qq.com
- * @LastEditTime: 2024-08-27 17:13:10
- * @FilePath: /cplusplus/src/spdlog/src/spd_log_helper.cpp
+ * @LastEditTime: 2025-01-16 17:26:59
+ * @FilePath: /cplusplus/submodule/algorithmBase/src/spd_log_helper.cpp
  * @Description:
  *
  * Copyright (c) 2024 by ${git_name_email}, All Rights Reserved.
  */
 #include "spd_log_helper.h"
 
+#include <filesystem>
 #include <iostream>
 #include <memory>
 #include <sstream>
@@ -29,7 +30,10 @@ void InitLog(const std::string& argv0, const std::string& log_path) {
     std::string full_log_path = root_path + "/";
     EnsureDirectory(full_log_path);
     std::stringstream ss;
-    ss << full_log_path  << argv0 << ".log";
+    ss << full_log_path << argv0 << ".log";
+    if (std::filesystem::exists(ss.str())) {
+        std::filesystem::remove(ss.str());
+    }
     LogManager::instance().Init(argv0, ss.str());
 }
 
