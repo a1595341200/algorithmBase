@@ -2,8 +2,8 @@
  * @Author: yao.xie 1595341200@qq.com
  * @Date: 2024-08-27 16:54:35
  * @LastEditors: yao.xie 1595341200@qq.com
- * @LastEditTime: 2024-08-27 17:12:26
- * @FilePath: /cplusplus/src/spdlog/include/spd_log_helper.h
+ * @LastEditTime: 2025-01-21 13:31:34
+ * @FilePath: /cplusplus/submodule/algorithmBase/include/spd_log_helper.h
  * @Description:
  *
  * Copyright (c) 2024 by ${git_name_email}, All Rights Reserved.
@@ -19,7 +19,7 @@
 #include <spdlog/fmt/ostr.h>
 #include <spdlog/spdlog.h>
 
-void InitLog(const std::string& argv0, const std::string& log_path = "");
+void InitLog(const std::string& argv0, const std::string& log_path = "./build/log");
 void ReleaseLog();
 
 class LogManager {
