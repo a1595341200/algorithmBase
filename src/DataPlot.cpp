@@ -2,7 +2,7 @@
  * @Author: yao.xie 1595341200@qq.com
  * @Date: 2024-03-22 15:58:59
  * @LastEditors: yao.xie 1595341200@qq.com
- * @LastEditTime: 2025-01-15 18:24:18
+ * @LastEditTime: 2025-01-21 14:07:54
  * @FilePath: /cplusplus/submodule/algorithmBase/src/DataPlot.cpp
  * @Description:
  *
@@ -81,13 +81,18 @@ void DataPlot::addBevData(float x, float y, float half_length, float half_width,
 
 void DataPlot::Update() {
     ImGui::SetNextItemOpen(true, ImGuiCond_FirstUseEver);
-    if (ImGui::TreeNode("plotLine")) {
-        plotLine();
-        ImGui::TreePop();
-    }
-    if (ImGui::TreeNode("plotBev")) {
-        plotBev();
-        ImGui::TreePop();
+    if (ImGui::BeginTabBar("ImPlotDemoTabs")) {
+        if (ImGui::BeginTabItem("plotLine")) {
+            ImGui::NewLine();
+            plotLine();
+            ImGui::EndTabItem();
+        }
+        if (ImGui::BeginTabItem("plotBev")) {
+            ImGui::NewLine();
+            plotBev();
+            ImGui::EndTabItem();
+        }
+        ImGui::EndTabBar();
     }
 }
 
