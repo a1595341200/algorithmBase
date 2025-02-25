@@ -5,8 +5,8 @@ set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED TRUE)
-include(${CMAKE_CURRENT_SOURCE_DIR}/cmake/config.cmake)
-add_compilation_options_check()
+# include(${CMAKE_CURRENT_SOURCE_DIR}/cmake/config.cmake)
+# add_compilation_options_check()
 
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/out)
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/out)
@@ -21,42 +21,44 @@ find_package(Boost COMPONENTS  filesystem REQUIRED)
 file(GLOB root_header_files "${CMAKE_CURRENT_SOURCE_DIR}/include/*.h" "${CMAKE_CURRENT_SOURCE_DIR}/include/*.hpp")
 file(GLOB root_src_files "${CMAKE_CURRENT_SOURCE_DIR}/src/*.cpp")
 
-set_source_files_properties(
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/pcdtool.cpp 
-    PROPERTIES
-    COMPILE_FLAGS "-Wno-effc++ -Wno-sign-conversion -Wno-conversion -Wno-old-style-cast"
-)
+# set_source_files_properties(
+#     ${CMAKE_CURRENT_SOURCE_DIR}/src/pcdtool.cpp 
+#     PROPERTIES
+#     COMPILE_FLAGS "-Wno-effc++ -Wno-sign-conversion -Wno-conversion -Wno-old-style-cast"
+# )
 
-set_source_files_properties(
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/trans_forms_group.cpp 
-    PROPERTIES
-    COMPILE_FLAGS "-Wno-effc++"
-)
+# set_source_files_properties(
+#     ${CMAKE_CURRENT_SOURCE_DIR}/src/trans_forms_group.cpp 
+#     PROPERTIES
+#     COMPILE_FLAGS "-Wno-effc++"
+# )
 
-set_source_files_properties(
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/ukf.cpp 
-    PROPERTIES
-    COMPILE_FLAGS "-Wno-float-conversion"
-)
+# set_source_files_properties(
+#     ${CMAKE_CURRENT_SOURCE_DIR}/src/ukf.cpp 
+#     PROPERTIES
+#     COMPILE_FLAGS "-Wno-float-conversion"
+# )
 
-set_source_files_properties(
-    ${CMAKE_CURRENT_SOURCE_DIR}/main.cpp 
-    PROPERTIES
-    COMPILE_FLAGS "-Wno-float-conversion"
-)
+# set_source_files_properties(
+#     ${CMAKE_CURRENT_SOURCE_DIR}/main.cpp 
+#     PROPERTIES
+#     COMPILE_FLAGS "-Wno-float-conversion"
+# )
 
 
-if(CMAKE_BUILD_TYPE STREQUAL "Release")
-    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -s")
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -s")
-else()
-    add_compile_options("-g3")
-endif()
+# if(CMAKE_BUILD_TYPE STREQUAL "Release")
+#     set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -s")
+#     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -s")
+# else()
+#     add_compile_options("-g3")
+# endif()
+add_compile_options("-g3")
 
 add_library(${PROJECT_N} ${root_header_files} ${root_src_files})
 
 find_package(PkgConfig REQUIRED)
-pkg_check_modules(GLOG REQUIRED libglog)
+find_package(glog REQUIRED)
+# pkg_check_modules(GLOG REQUIRED libglog)
 add_executable(demo main.cpp)
 
 target_link_libraries(demo 
@@ -64,10 +66,10 @@ target_link_libraries(demo
     ${PROJECT_N}
     fmt::fmt
     app::app
-    ${GLOG_LIBRARIES}
+    glog::glog
     spdlog::spdlog
     ${Boost_LIBRARIES}
-    dl
+    # dl
     ${Protobuf_LIBRARIES}
 )
 
