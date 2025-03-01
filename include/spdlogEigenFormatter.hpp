@@ -2,7 +2,7 @@
  * @Author: yao.xie 1595341200@qq.com
  * @Date: 2025-01-16 17:17:10
  * @LastEditors: yao.xie 1595341200@qq.com
- * @LastEditTime: 2025-01-16 17:59:39
+ * @LastEditTime: 2025-03-01 12:49:04
  * @FilePath: /cplusplus/submodule/algorithmBase/include/spdlogEigenFormatter.hpp
  * @Description:
  *
@@ -20,7 +20,7 @@ struct fmt::formatter<Eigen::Matrix<Scalar, Rows, Cols>> {
     }
 
     template <typename FormatContext>
-    auto format(const Eigen::Matrix<Scalar, Rows, Cols>& matrix, FormatContext& ctx)
+    auto format(const Eigen::Matrix<Scalar, Rows, Cols>& matrix, FormatContext& ctx) const
         -> decltype(ctx.out()) {
         std::stringstream ss;
         ss << matrix;
@@ -51,8 +51,8 @@ struct fmt::formatter<Eigen::Transpose<Eigen::Matrix<Scalar, Rows, Cols>>> {
     }
 
     template <typename FormatContext>
-    auto format(const Eigen::Transpose<Eigen::Matrix<Scalar, Rows, Cols>>& matrix, FormatContext& ctx)
-        -> decltype(ctx.out()) {
+    auto format(const Eigen::Transpose<Eigen::Matrix<Scalar, Rows, Cols>>& matrix,
+                FormatContext& ctx) const -> decltype(ctx.out()) {
         std::stringstream ss;
         ss << matrix;
         return fmt::format_to(ctx.out(), "{}", ss.str());
