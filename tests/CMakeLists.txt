@@ -6,8 +6,8 @@ find_package(PkgConfig REQUIRED)
 # pkg_check_modules(GTEST REQUIRED IMPORTED_TARGET gtest)
 # pkg_check_modules(GMOCK REQUIRED IMPORTED_TARGET gmock)
 
-find_package(glog REQUIRED)
-find_package(gtest REQUIRED)
+find_package(glog CONFIG REQUIRED)
+find_package(gtest CONFIG REQUIRED)
 # find_package(gmock REQUIRED)
 
 message("GLOG: ${GLOG_LIBRARIES}")

@@ -16,7 +16,7 @@ find_package(app REQUIRED)
 find_package(spdlog REQUIRED)
 find_package(Armadillo REQUIRED)
 find_package(Protobuf REQUIRED)
-find_package(Boost COMPONENTS  filesystem REQUIRED)
+find_package(Boost CONFIG COMPONENTS  filesystem REQUIRED)
 
 file(GLOB root_header_files "${CMAKE_CURRENT_SOURCE_DIR}/include/*.h" "${CMAKE_CURRENT_SOURCE_DIR}/include/*.hpp")
 file(GLOB root_src_files "${CMAKE_CURRENT_SOURCE_DIR}/src/*.cpp")
